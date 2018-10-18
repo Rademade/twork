@@ -20,7 +20,11 @@ export  default class GoogleUserSignUpService {
     await getManager().transaction(async transactionManger => {
       const user = await this.userRepo.save(this.user);
       const workspace = await this.getDefaultWorkspace();
-      workspace.users.push(user);
+      if (workspace.users) {
+        workspace.users.push(user);
+      } else {
+        workspace.users = [user];
+      }
       await workspace.save();
     });
     return this.user;
