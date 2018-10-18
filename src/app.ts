@@ -59,6 +59,8 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
   res.sendFile(staticDir + "/index.html");
 });
 
+app.enable("trust proxy");
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404);
   console.log("entered into handler", req.url);
