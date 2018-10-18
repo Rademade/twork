@@ -6,7 +6,9 @@
       "type": "git",
       "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
    },
-   "engines": { "node": "9.5.0" },
+   "engines": {
+      "node": "9.5.0"
+   },
    "author": "Bowden Kelly",
    "license": "MIT",
    "scripts": {
@@ -28,7 +30,7 @@
       "debug": "npm run build && npm run watch-debug",
       "serve-debug": "nodemon --inspect dist/server.js",
       "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
-      "heroku-postbuild": "npm run build && cd client && npm install && npm run build"
+      "heroku-postbuild": "npm run build"
    },
    "dependencies": {
       "@types/jsonwebtoken": "^7.2.7",

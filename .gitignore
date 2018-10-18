@@ -45,6 +45,7 @@ coverage
 src/config/
 
 dist
+!client/dist
 node_modules
 
 # local env files
