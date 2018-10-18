@@ -8,6 +8,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "engines": { "node": "9.5.0" },
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^5.0.1",
