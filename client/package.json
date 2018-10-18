@@ -1,0 +1,39 @@
+{
+  "name": "twork-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^5.0.1",
+    "es6-promise": "^4.2.4",
+    "express": "^4.16.3",
+    "hammerjs": "^2.0.8",
+    "idb": "^2.1.3",
+    "idb-keyval": "^3.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.5",
+    "moment": "^2.22.1",
+    "moment-duration-format": "^2.2.2",
+    "register-service-worker": "^1.0.0",
+    "uuid": "^3.3.2",
+    "vue": "^2.5.2",
+    "vue-axios": "^2.1.1",
+    "vue-moment": "^3.2.0",
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.1.9",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@vue/cli-plugin-eslint": "^3.0.0",
+    "@vue/cli-plugin-pwa": "^3.0.0",
+    "@vue/cli-service": "^3.0.0",
+    "vue-template-compiler": "^2.5.17"
+  }
+}

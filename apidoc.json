@@ -1,0 +1,11 @@
+{
+    "name": "Twork",
+    "version": "0.0.1",
+    "description": "apidoc Twork Rademade",
+    "title": "Twork Rademade API DOC",
+    "url": "/api/v1",
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+}
