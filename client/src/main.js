@@ -16,7 +16,6 @@ import {
 
 import clickOutsideDirective from './core/directives/clickOutside';
 
-
 Vue.use(Vuetify)
 Vue.use(momentPlugin)
 Vue.use(lodashPlugin)
