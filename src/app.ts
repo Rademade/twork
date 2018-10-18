@@ -15,13 +15,7 @@ dotenv.config({ path: ".env" });
 
 // Create Express server
 const app = express();
-
-// Allow CORS
-const corsOptions = {
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));
+app.enable("trust proxy");
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
@@ -50,7 +44,6 @@ app.use("/apidoc", express.static("apidoc"));
 buildRoutingTable(app);
 
 const staticDir = path.resolve(__dirname, "../client/dist");
-console.log(staticDir);
 
 app.use(express.static(staticDir));
 app.use("/", (req: Request, res: Response, next: NextFunction) => {
@@ -58,8 +51,6 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 
   res.sendFile(staticDir + "/index.html");
 });
-
-app.enable("trust proxy");
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404);
