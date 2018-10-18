@@ -45,6 +45,7 @@ coverage
 src/config/
 
 dist
+!client/dist
 node_modules
 
 # local env files
@@ -57,7 +58,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Editor directories and files
+# Editor directories and gitfiles
 .idea
 .vscode
 *.suo
