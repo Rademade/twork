@@ -59,17 +59,16 @@ export const create =  async (req: Request, res: Response) => {
       title: `New project "${project.name}" added!`,
       channel: "new-project"
     };
-    Subscription.find().then((subscriptions) => {
-      subscriptions.forEach((subscription) => {
-        const pushSub = {
-          endpoint: subscription.endpoint,
-          keys: {
-            auth: subscription.auth,
-            p256dh: subscription.p256dh
-          }
-        };
-        webpush.sendNotification(pushSub, JSON.stringify(pushPayload));
-      });
+    const subscriptions = await Subscription.find();
+    subscriptions.forEach((subscription) => {
+      const pushSub = {
+        endpoint: subscription.endpoint,
+        keys: {
+          auth: subscription.auth,
+          p256dh: subscription.p256dh
+        }
+      };
+      webpush.sendNotification(pushSub, JSON.stringify(pushPayload));
     });
     res.json(project);
   } catch (error) {
