@@ -6,7 +6,7 @@
         clipped
         fixed
         app
-        :width="180"
+        :width="140"
       >
         <v-list dense>
           <v-list-tile
@@ -26,8 +26,8 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>Twork</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn>
+        <v-toolbar-items>
+          <v-btn flat>
             <Profile/>
           </v-btn>
         </v-toolbar-items>

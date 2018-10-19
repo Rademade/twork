@@ -1,9 +1,7 @@
 import Timer from './Timer';
-import requireAuth from "@/core/services/requireAuth";
 
-export const TIMER_ROUTES = {
+export const TIMER_DESKTOP_ROUTES = {
   path: '/timer',
   component: Timer,
-  name: 'timer',
-  beforeEnter: requireAuth
+  name: 'timer-list'
 };
