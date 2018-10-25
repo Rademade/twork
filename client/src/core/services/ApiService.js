@@ -8,13 +8,25 @@ export default class ApiService {
     this.basePath = configs.apiPrefix + resourceName;
   }
 
-  async get() {
+  async getAll() {
     try {
       const headers = await this.requestHeaders();
       const resp = await fetch(this.basePath, {
         headers: headers
       });
       return await resp.json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async get(id) {
+    try {
+      const headers = await this.requestHeaders();
+      const resp = await fetch(this.basePath + '/' + id, { headers: headers });
+      const respJson = await resp.json();
+      console.log(respJson);
+      return respJson;
     } catch (error) {
       console.log(error);
     }

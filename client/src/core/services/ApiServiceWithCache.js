@@ -6,9 +6,9 @@ export default class ApiServiceWithCache extends ApiService{
     this.cacheStore = cacheStore;
   }
 
-  async get() {
+  async getAll() {
     try {
-      const dataArray = await super.get();
+      const dataArray = await super.getAll();
       dataArray.forEach((el) => {
         el.unsynced = false;
         this.cacheStore.write(el)
@@ -18,6 +18,18 @@ export default class ApiServiceWithCache extends ApiService{
       return this.cacheStore.readAllData();
     }
   }
+
+  async get(id) {
+    try {
+      let data = await super.get(id);
+      data.unsynced = false;
+      this.cacheStore.write(data);
+      return data;
+    } catch (error) {
+      return this.cacheStore.read(id);
+    }
+  }
+
 
   async post(createData) {
     const data = await super.post(createData);

@@ -22,7 +22,7 @@ class UserAuthService {
   async fetchUser() {
     const token = await this.getToken();
     if (token) {
-      let user = await this.userApiService.get();
+      let user = await this.userApiService.getAll();
       this.setUser(user);
     } else {
       throw 'User is not authentificated'

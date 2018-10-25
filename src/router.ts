@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Router, Response, Request, Express } from "express";
 import { googleCallbackHandlers, googleRedirectWithScope } from "./controllers/auth";
-import { index, create, update, destroy } from "./controllers/timeEntry";
+import { index, create, update, destroy, show } from "./controllers/timeEntry";
 import * as workspacesMethods from "./controllers/workspaces";
 import { me } from "./controllers/user";
 import * as projectsRoutes from "./controllers/projects";
@@ -26,15 +26,15 @@ const buildRoutingTable = (app: Express) => {
   const timeEntriesRouter = Router();
 
   timeEntriesRouter.route("/time_entries").get(index).post(create);
-  timeEntriesRouter.route("/time_entries/:id").put(update).delete(destroy);
+  timeEntriesRouter.route("/time_entries/:id").put(update).delete(destroy).get(show);
 
-  app.use("/api/v1/users/me", passport.authenticate("jwt", { session: false }), timeEntriesRouter);
+  app.use("/api/v1", passport.authenticate("jwt", { session: false }), timeEntriesRouter);
 
   // Projects
   const projectsRouter = Router();
   projectsRouter.route("/projects").get(projectsRoutes.index).post(projectsRoutes.create);
   projectsRouter.route("/projects/:id").delete(projectsRoutes.destroy).put(projectsRoutes.update);
-  app.use("/api/v1/users/me", passport.authenticate("jwt", { session: false }), projectsRouter);
+  app.use("/api/v1", passport.authenticate("jwt", { session: false }), projectsRouter);
 
   const workspacesRouter = Router();
   workspacesRouter.route("/workspaces/:id/users").get(workspacesMethods.workspaceUsers);

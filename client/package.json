@@ -37,6 +37,8 @@
     "@vue/cli-plugin-eslint": "^3.0.0",
     "@vue/cli-plugin-pwa": "^3.0.0",
     "@vue/cli-service": "^3.0.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "vue-template-compiler": "^2.5.17"
   }
 }

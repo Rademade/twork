@@ -29,7 +29,7 @@ export class TimeEntry {
   @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
   startedAt: string;
 
   @Column({nullable: true})
@@ -40,7 +40,4 @@ export class TimeEntry {
 
   @CreateDateColumn()
   createdAt: string;
-
-  @UpdateDateColumn()
-  updatedAt: string;
 }

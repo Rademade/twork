@@ -1,7 +1,7 @@
 import Index from './Index';
 
 export const HOME_ROUTES = {
-  path: '/',
+  path: '',
   component: Index,
   name: 'home'
 };

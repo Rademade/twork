@@ -1,6 +1,7 @@
 class DeviceHelper {
   isMobile() {
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    return true
+    // return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   }
 }
 

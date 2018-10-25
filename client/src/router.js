@@ -1,62 +1,35 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/core/components/Layout'
-import AppLayout from '@/core/components/AppLayout'
+import LandingLayout from '@/core/components/LandingLayout'
 import NotFound from '@/core/components/NotFound'
-import requireAuth from "@/core/services/requireAuth";
-import deviceHelper from "@/core/services/deviceHelper";
 
-import { HOME_ROUTES } from '@/modules/home/router'
-import { SIGN_ROUTES } from '@/modules/sign/router'
-import { TIMER_MOBILE_ROUTES } from '@/modules/timer-mobile/router'
-import { TIMER_DESKTOP_ROUTES } from '@/modules/timer-desktop/router'
-import { PROJECT_ROUTES } from '@/modules/projects/router'
-import { REPORT_ROUTES } from '@/modules/reports/router'
-
-import configs from '@/configs'
+import { HOME_ROUTES } from "@/modules/home/router";
+import { SIGN_ROUTES } from "@/modules/sign/router";
+import APP_ROUTE from "@/modules/app/router";
 
 Vue.use(Router)
 
-const APP_ROUTES = [
-  HOME_ROUTES,
-  PROJECT_ROUTES,
-  REPORT_ROUTES
+const ROUTES = [
+  {
+    path: '/',
+    component: LandingLayout,
+    children: [
+      SIGN_ROUTES,
+      HOME_ROUTES
+    ]
+  },
+  {
+    path: '*',
+    component: NotFound
+  },
+  APP_ROUTE
 ]
 
-if (deviceHelper.isMobile()) {
-  APP_ROUTES.push(TIMER_MOBILE_ROUTES)
-} else {
-  APP_ROUTES.push(TIMER_DESKTOP_ROUTES)
-}
+console.log(ROUTES);
 
 const router = new Router({
   mode: 'history',
-  routes: [
-    {
-      path: '*',
-      component: NotFound,
-      redirect: 'timer'
-    },
-    {
-      path: '/',
-      component: Layout,
-      children: [
-        SIGN_ROUTES,
-        HOME_ROUTES
-      ]
-    },
-    {
-      path: '/apidoc',
-      redirect: () => { window.location.href = configs.apiDocUrl }
-    },
-    {
-      path: '/app',
-      name: 'app',
-      component: AppLayout,
-      beforeEnter: requireAuth,
-      children: APP_ROUTES
-    }
-  ]
+  routes: ROUTES
 })
 
 export default router

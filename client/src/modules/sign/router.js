@@ -4,13 +4,13 @@ import SignInSuccess from '@/modules/sign/SignInSuccess';
 
 
 export const SIGN_ROUTES = {
-  path: '/sign',
+  path: 'sign',
   component: Sign,
   redirect: { name: 'signIn' },
   children: [
     {
       path: 'in',
-      name: 'signin',
+      name: 'signIn',
       component: SignIn
     },
     {

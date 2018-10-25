@@ -8,10 +8,8 @@
   export default {
     mounted() {
       const token = this.$route.query.token;
-      console.log(userAuthService);
-
       userAuthService.setToken(token).then( () => {
-        userAuthService.fetchUser().then(()=> this.$router.push({name: "timer"}))
+        userAuthService.fetchUser().then(()=> this.$router.push({name: "timer-list"}))
       })
     }
   }

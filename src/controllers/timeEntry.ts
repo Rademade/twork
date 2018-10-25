@@ -6,7 +6,7 @@ import { NextFunction }              from "express-serve-static-core";
 import * as _                        from "lodash";
 import { prototype } from "nodemailer/lib/dkim";
 import { getRepository } from "typeorm";
-
+import { check } from "express-validator/check";
 
 const serializeTimeEntry = (timeEntry: TimeEntry) => {
   return {
@@ -19,8 +19,7 @@ const serializeTimeEntry = (timeEntry: TimeEntry) => {
     projectName: (timeEntry.project && timeEntry.project.name),
     workspaceId: timeEntry.workspaceId,
     userId: timeEntry.userId,
-    createdAt: timeEntry.createdAt,
-    updatedAt: timeEntry.updatedAt
+    createdAt: timeEntry.createdAt
   };
 };
 /**
@@ -56,6 +55,14 @@ export const index = async (req: Request, res: Response) => {
   res.json(timeEntries.map(timeEntry => serializeTimeEntry(timeEntry)));
 };
 
+
+export const show = async (req: Request, res: Response) => {
+  const timeEntryRepo = getRepository(TimeEntry);
+  const timeEntry = await timeEntryRepo.findOne({where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
+  res.json(serializeTimeEntry(timeEntry));
+};
+
+
 /**
  * @apiName Create Time Entry
  * @apiGroup TimeEntries
@@ -79,24 +86,17 @@ export const create =  async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @apiName Update Time Entry
- * @apiGroup TimeEntries
- * @apiPermission User
- * @api {put} /time_entries/:id Update Time Entry
- * @apiParam {String} [startedAt]  Datetime ISO string
- * @apiParam {String} [stoppedAt]  Datetime ISO string
- * @apiParam {Boolean} [billable]  billable flag
- * @apiParam {String} [description]  Description
- */
+
 export const update = async (req: Request, res: Response) => {
   try {
-    let timeEntryParams = _.pick(req.body, ["startedAt", "stoppedAt", "description", "billable", "projectId"]) as any;
-    timeEntryParams = _.pickBy(timeEntryParams, _.identity);
     const timeEntryRepo = getRepository(TimeEntry);
-    let timeEntry = await timeEntryRepo.findOne({where: { id: req.params.id, userId: req.user.id }, relations: ["project"]}) ;
-    timeEntry = Object.assign(timeEntry, timeEntryParams);
-    await timeEntryRepo.save(timeEntry);
+    const timeEntry = await timeEntryRepo.findOne({where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
+    timeEntry.startedAt = req.body.startedAt;
+    timeEntry.stoppedAt = req.body.stoppedAt;
+    timeEntry.description = req.body.description;
+    timeEntry.billable = req.body.billable;
+    timeEntry.projectId = req.body.projectId;
+    await timeEntryRepo.update({ id: req.params.id, userId: req.user.id } , timeEntry);
     res.json(serializeTimeEntry(timeEntry));
   } catch (error) {
     res.status(400).json(error);
@@ -113,8 +113,8 @@ export const destroy = async (req: Request, res: Response) => {
   try {
     const timeEntryRepo = getRepository(TimeEntry);
     const timeEntry = await timeEntryRepo.findOne({ where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
-    await timeEntryRepo.delete(timeEntry);
-    res.json(serializeTimeEntry(timeEntry));
+    const result =  await timeEntryRepo.delete(timeEntry.id);
+    return res.json(serializeTimeEntry(timeEntry));
   } catch (error) {
     res.status(400).json(error);
   }
