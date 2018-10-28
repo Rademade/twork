@@ -1,7 +1,6 @@
 import { Response, Request }          from "express";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
-import { User }          from "./entity/User";
-import { getRepository } from "typeorm";
+import User from "./models/User.model";
 
 import GoogleUserSignUpService from "./services/GoogleUserSignUpService";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
@@ -24,8 +23,7 @@ const initPassportStrategies = (passport: any) => {
 
   passport.use(new JwtStrategy(jwtOptions, async function (jwtPayload, done) {
     try {
-      const userRepo = getRepository(User);
-      const user = await userRepo.findOne(jwtPayload.id);
+      const user = await User.findById(jwtPayload.id);
       done(undefined, user);
     } catch (error) {
       done(error);
@@ -40,8 +38,7 @@ const initPassportStrategies = (passport: any) => {
   },
     async function (accessToken: any, refreshToken: any, googleProfile: any, done: Function) {
       try {
-        const userRepo = getRepository(User);
-        const user = await userRepo.findOne({ googleId: googleProfile.id });
+        const user = await User.findById(googleProfile.id);
         if (user) {
           done(undefined, user);
         } else {

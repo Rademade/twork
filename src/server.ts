@@ -1,9 +1,9 @@
 import errorHandler from "errorhandler";
 import app from "./app";
 import "reflect-metadata";
-import { createConnection } from "typeorm";
+import connection from "./db";
 
-createConnection().then(connection => {
+connection.authenticate().then(_ => {
 
   app.use(errorHandler());
 

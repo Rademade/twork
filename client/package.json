@@ -12,6 +12,7 @@
     "node": "9.5.0"
   },
   "dependencies": {
+    "@types/sequelize": "^4.27.29",
     "axios": "^0.18.0",
     "dotenv": "^5.0.1",
     "es6-promise": "^4.2.4",

@@ -1,24 +1,24 @@
 
-import { User } from "../entity/User";
-import { Workspace } from "../entity/Workspace";
-import { getRepository, getManager, Repository } from "typeorm";
+import User from "../models/User.model";
+import Workspace from "../models/Workspace.model";
+import database from "../db";
 
 export  default class GoogleUserSignUpService {
-  private user: User = new User();
-  private userRepo: Repository<User> = getRepository(User);
-  private workspaceRepo: Repository<Workspace> = getRepository(Workspace);
+  private user: User;
 
   constructor(googleProfile: any) {
-    this.user.googleId = googleProfile.id;
-    this.user.name = googleProfile.displayName;
-    this.user.email = googleProfile.emails[0].value;
-    this.user.imgUrl = googleProfile.photos[0].value;
+    this.user = new User({
+      googleId: googleProfile.id,
+      name: googleProfile.displayName,
+      email: googleProfile.emails[0].value,
+      imgUrl: googleProfile.photos[0].value
+    });
   }
 
   public async signUp(): Promise<User> {
     // this.validateRademadeUser();
-    await getManager().transaction(async transactionManger => {
-      const user = await this.userRepo.save(this.user);
+    await database.transaction(async _ => {
+      const user = await this.user.save();
       const workspace = await this.getDefaultWorkspace();
       if (workspace.users) {
         workspace.users.push(user);
@@ -37,12 +37,11 @@ export  default class GoogleUserSignUpService {
     }
   }
   private async getDefaultWorkspace(): Promise<Workspace> {
-    const workspaceList = await this.workspaceRepo.find({ take: 1 , relations: ["users"]});
-    let workspace = workspaceList[0];
-    if (workspace) { return workspace; }
-    workspace = new Workspace();
-    workspace.name = "Rademade";
-    return await this.workspaceRepo.save(workspace);
+    let workspace = await Workspace.findOne();
+    if (!workspace) {
+      workspace = await new Workspace({name: "Rademade"}).save();
+    }
+    return workspace;
   }
 
 }

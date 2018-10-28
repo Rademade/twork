@@ -13,40 +13,40 @@ const buildRoutingTable = (app: Express) => {
   // Auth
   const authRouter = Router();
 
-  authRouter.get("/google", googleRedirectWithScope);
-  authRouter.get("/google/callback", ...googleCallbackHandlers);
+  // authRouter.get("/google", googleRedirectWithScope);
+  // authRouter.get("/google/callback", ...googleCallbackHandlers);
 
-  app.use("/api/v1/auth", authRouter);
+  // app.use("/api/v1/auth", authRouter);
 
-  const userRouter = Router();
-  userRouter.route("/users/me").get(me);
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), userRouter);
+  // const userRouter = Router();
+  // userRouter.route("/users/me").get(me);
+  // app.use("/api/v1", passport.authenticate("jwt", { session: false }), userRouter);
 
-  // TimeEntires
-  const timeEntriesRouter = Router();
+  // // TimeEntires
+  // const timeEntriesRouter = Router();
 
-  timeEntriesRouter.route("/time_entries").get(index).post(create);
-  timeEntriesRouter.route("/time_entries/:id").put(update).delete(destroy).get(show);
+  // timeEntriesRouter.route("/time_entries").get(index).post(create);
+  // timeEntriesRouter.route("/time_entries/:id").put(update).delete(destroy).get(show);
 
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), timeEntriesRouter);
+  // app.use("/api/v1", passport.authenticate("jwt", { session: false }), timeEntriesRouter);
 
-  // Projects
-  const projectsRouter = Router();
-  projectsRouter.route("/projects").get(projectsRoutes.index).post(projectsRoutes.create);
-  projectsRouter.route("/projects/:id").delete(projectsRoutes.destroy).put(projectsRoutes.update);
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), projectsRouter);
+  // // Projects
+  // const projectsRouter = Router();
+  // projectsRouter.route("/projects").get(projectsRoutes.index).post(projectsRoutes.create);
+  // projectsRouter.route("/projects/:id").delete(projectsRoutes.destroy).put(projectsRoutes.update);
+  // app.use("/api/v1", passport.authenticate("jwt", { session: false }), projectsRouter);
 
-  const workspacesRouter = Router();
-  workspacesRouter.route("/workspaces/:id/users").get(workspacesMethods.workspaceUsers);
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), workspacesRouter);
+  // const workspacesRouter = Router();
+  // workspacesRouter.route("/workspaces/:id/users").get(workspacesMethods.workspaceUsers);
+  // app.use("/api/v1", passport.authenticate("jwt", { session: false }), workspacesRouter);
 
-  const reportsRouter = Router();
-  reportsRouter.route("/reports/summary").get(reportRoutes.summary);
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), reportsRouter);
+  // const reportsRouter = Router();
+  // reportsRouter.route("/reports/summary").get(reportRoutes.summary);
+  // app.use("/api/v1", passport.authenticate("jwt", { session: false }), reportsRouter);
 
   const subscriptionRouter = Router();
   subscriptionRouter.route("/subscriptions").post(subscriptioRoutes.create);
-  app.use("/api/v1", passport.authenticate("jwt", { session: false }), subscriptionRouter);
+  app.use("/api/v1", subscriptionRouter);
 
 };
 

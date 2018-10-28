@@ -7,7 +7,7 @@ import * as _                from "lodash";
 import { getRepository, getCustomRepository } from "typeorm";
 import { WorkspaceRepository } from "../repositories/WorkspaceRepository";
 import webpush from "web-push";
-import { Subscription } from "../entity/Subscription";
+import Subscription from "../models/Subscription.model";
 /**
  * @apiDefine Success Success 200
  */
@@ -59,7 +59,7 @@ export const create =  async (req: Request, res: Response) => {
       title: `New project "${project.name}" added!`,
       channel: "new-project"
     };
-    const subscriptions = await Subscription.find();
+    const subscriptions = await Subscription.findAll();
     subscriptions.forEach((subscription) => {
       const pushSub = {
         endpoint: subscription.endpoint,
