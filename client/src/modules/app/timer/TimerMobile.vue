@@ -127,6 +127,7 @@
         snackbar: false,
         description: '',
         projectId: '',
+        workspaceId: '',
         startTime: '',
         stopTime: '',
         startDate: '',
@@ -155,6 +156,7 @@
           this.billable = newTimeEntry.billable;
           this.description = newTimeEntry.description;
           this.projectId = newTimeEntry.projectId;
+          this.workspaceId = newTimeEntry.workspaceId;
         }
       }
     },
@@ -171,7 +173,8 @@
             billable: this.billable,
             projectId: this.projectId,
             startedAt: this.$moment(this.startDate + ' ' + this.startTime).toISOString(),
-            stoppedAt: (this.stopTime == '') ? null :  this.$moment(this.startDate + ' ' + this.stopTime).toISOString()
+            stoppedAt: (this.stopTime == '') ? null :  this.$moment(this.startDate + ' ' + this.stopTime).toISOString(),
+            workspaceId: this.workspaceId
         }).then(_ => this.snackbar = true)
       }
     }
