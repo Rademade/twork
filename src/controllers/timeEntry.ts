@@ -85,7 +85,8 @@ export const create =  async (req: Request, res: Response) => {
     );
     const timeEntry = await TimeEntry.create({
       ...timeEntryParams,
-      userId: req.user.id
+      userId: req.user.id,
+      include: [Project]
     });
     res.json(serializeTimeEntry(timeEntry));
   } catch (error) {

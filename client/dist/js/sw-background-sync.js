@@ -156,6 +156,7 @@ class ApiService {
   async post(params = {}) {
     try {
       const headers = await this.requestHeaders();
+
       const resp = await fetch(
         this.basePath, {
           method: 'POST',
@@ -163,6 +164,7 @@ class ApiService {
           headers: headers
         }
       );
+
       const data = await resp.json();
       return data;
     } catch (error) {
@@ -254,7 +256,7 @@ class ApiServiceWithCache extends ApiService{
   }
 }
 
-const TIME_ENTRY_API_PATH = '/users/me/time_entries';
+const TIME_ENTRY_API_PATH = '/time_entries';
 const TIME_ENTRIES_STORE_NAME = 'time-entries';
 
 const timeEntriesStore = new TworkIndexedDBStore(TIME_ENTRIES_STORE_NAME);
