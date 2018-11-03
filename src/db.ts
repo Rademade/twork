@@ -14,7 +14,7 @@ import {
 const namespace = cls.createNamespace("twork-namespace");
 Sequelize.useCLS(namespace);
 
-const connection = new Sequelize(config.databaseUrl());
+const connection = new Sequelize(config.databaseUrl);
 
 connection.addModels([User, Subscription, TimeEntry, Project, Workspace, WorkspaceUser]);
 
