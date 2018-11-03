@@ -2,7 +2,7 @@
 
 import { Response, Request } from "express";
 import * as _ from "lodash";
-import { SummaryReportFilter, SummaryReportQuery } from "../services/SummaryReportQuery";
+// import { SummaryReportFilter, SummaryReportQuery } from "../services/SummaryReportQuery";
 
 /**
  * @apiDefine Success Success 200
@@ -28,9 +28,9 @@ import { SummaryReportFilter, SummaryReportQuery } from "../services/SummaryRepo
  */
 export const summary = async (req: Request, res: Response) => {
   debugger;
-  const filter = _.pick(req.query, ["start", "end", "team", "billable", "projects"]) as SummaryReportFilter;
-  const groupBy = _.pick(req.query, ["groupBy", "subgroupBy"]);
-  const summaryReportQuery = new SummaryReportQuery(filter, groupBy);
-  const result = await summaryReportQuery.call();
-  res.json(result);
+  // const filter = _.pick(req.query, ["start", "end", "team", "billable", "projects"]) as SummaryReportFilter;
+  // const groupBy = _.pick(req.query, ["groupBy", "subgroupBy"]);
+  // const summaryReportQuery = new SummaryReportQuery(filter, groupBy);
+  // const result = await summaryReportQuery.call();
+  res.json({});
 };
