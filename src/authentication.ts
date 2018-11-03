@@ -1,4 +1,3 @@
-import { Response, Request }          from "express";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 import User from "./models/User.model";
 
