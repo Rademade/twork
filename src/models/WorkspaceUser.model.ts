@@ -1,15 +1,19 @@
 
-import { Table, Column, Model, ForeignKey } from "sequelize-typescript";
+import { Table, Column, Model, ForeignKey, Sequelize } from "sequelize-typescript";
 import Workspace from "./Workspace.model";
-import User from "./User.mode";
+import User from "./User.model";
 
-@Table
+@Table({
+  timestamps: true
+})
 export default class WorkspaceUser extends Model<WorkspaceUser> {
   @ForeignKey(() => User)
-  @Column
+  @Column({type: Sequelize.UUID})
   userId: string;
 
+
   @ForeignKey(() => Workspace)
-  @Column
+  @Column({type: Sequelize.UUID})
   workspaceId: string;
+
 }

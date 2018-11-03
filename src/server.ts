@@ -1,9 +1,9 @@
 import errorHandler from "errorhandler";
 import app from "./app";
 import "reflect-metadata";
-import connection from "./db";
+import database from "./db";
 
-connection.authenticate().then(_ => {
+database.authenticate().then(_ => {
 
   app.use(errorHandler());
 

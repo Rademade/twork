@@ -1,13 +1,22 @@
 import { Sequelize } from "sequelize-typescript";
+import config from "./config";
 import cls from "continuation-local-storage";
-import Subscription from "./models/Subscription.model";
+
+import {
+  Subscription,
+  User,
+  TimeEntry,
+  Project,
+  Workspace,
+  WorkspaceUser
+} from "./models";
 
 const namespace = cls.createNamespace("twork-namespace");
 Sequelize.useCLS(namespace);
 
-const postgresUri = "postgres://@localhost/twork_development";
+const connection = new Sequelize(config.databaseUrl());
 
-const db = new Sequelize(postgresUri);
+connection.addModels([User, Subscription, TimeEntry, Project, Workspace, WorkspaceUser]);
 
-db.addModels([Subscription]);
-export default db;
+export default connection;
+

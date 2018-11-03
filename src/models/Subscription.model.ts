@@ -1,13 +1,14 @@
-import { Table, Column, Model, PrimaryKey, IsUUID, BelongsTo, ForeignKey } from "sequelize-typescript";
-import User from "./User.mode";
+import { Table, Column, Model, PrimaryKey, IsUUID, BelongsTo, ForeignKey, Default, Sequelize } from "sequelize-typescript";
+import User from "./User.model";
 
 @Table({
-  tableName: "subscription"
+  timestamps: true
 })
 export default class Subscription extends Model<Subscription> {
   @IsUUID(4)
   @PrimaryKey
-  @Column
+  @Default(Sequelize.UUIDV4)
+  @Column({type: Sequelize.UUID})
   id: string;
 
   @Column
@@ -19,8 +20,8 @@ export default class Subscription extends Model<Subscription> {
   @Column
   auth: string;
 
-  @ForeignKey(() => User)
   @Column
+  @ForeignKey(() => User)
   userId: string;
 
   @BelongsTo(() => User)

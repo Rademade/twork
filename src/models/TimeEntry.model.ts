@@ -1,23 +1,24 @@
 
-import { Table, Column, Model, PrimaryKey, IsUUID, ForeignKey, BelongsTo, DataType, Default } from "sequelize-typescript";
+import { Table, Column, Model, PrimaryKey, IsUUID, ForeignKey, BelongsTo, DataType, Default, Sequelize } from "sequelize-typescript";
 import Workspace from "./Workspace.model";
 import Project from "./Project.model";
+import User from "./User.model";
 
 @Table({
-  timestamps: true,
-  tableName: "time_entry"
+  timestamps: true
 })
 export default class TimeEntry extends Model<TimeEntry> {
   @IsUUID(4)
   @PrimaryKey
-  @Column
+  @Default(Sequelize.UUIDV4)
+  @Column({type: Sequelize.UUID})
   id: string;
 
   @Column
   description: string;
 
-  @Column({ type:  DataType.DATE})
   @Default({value: () => "CURRENT_TIMESTAMP"})
+  @Column({ type:  DataType.DATE})
   startedAt: string;
 
   @Column({type: DataType.DATE})
@@ -39,4 +40,11 @@ export default class TimeEntry extends Model<TimeEntry> {
 
   @BelongsTo(() => Project)
   project: Project;
+
+  @ForeignKey(() => User)
+  @Column
+  userId: string;
+
+  @BelongsTo(() => User)
+  user: User;
 }

@@ -61,7 +61,7 @@ const getters = {
   },
   activeTimeEntry(state) {
     const activeTimeEntry = _.find(state.timeEntries, timeEntry => !timeEntry.stoppedAt);
-    return activeTimeEntry && new TimeEntry(activeTimeEntry) || state.emptyTimeEntry;
+    return activeTimeEntry && new TimeEntry(activeTimeEntry) || null;
   }
 }
 

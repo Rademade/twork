@@ -1,5 +1,8 @@
 <template>
   <v-layout row wrap>
+    <v-flex xs12 sm6 offset-sm3 v-if="activeTimeEntry">
+      <ActiveTimer/>
+    </v-flex>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <div v-for="(timeEntries, date) in timeEntryGroups" :key="date">
@@ -27,10 +30,12 @@
   import addToHomeScreen from "@/core/services/addToHomeScreen";
   import subscriptionsManager from  "@/core/services/subscriptionsManager";
   import TimerListGroup from "./timer-list-mobile/TimerListGroup";
+  import ActiveTimer from "./timer-list-mobile/ActiveTimer";
 
   export default {
     components: {
-      TimerListGroup
+      TimerListGroup,
+      ActiveTimer
     },
     data: () => {
       return {
@@ -39,7 +44,8 @@
     },
     computed: {
       ...mapGetters({
-        stoppedTimeEntries: 'timers/stoppedTimeEntries'
+        stoppedTimeEntries: 'timers/stoppedTimeEntries',
+        activeTimeEntry: "timers/activeTimeEntry"
       }),
       timeEntryGroups() {
         return this.$_.groupBy(this.stoppedTimeEntries, (timeEntry) => {
@@ -67,7 +73,7 @@
         }
       },
       createNewTimer() {
-        this.createTimeEntry({}).then(timeEntry => {
+        this.createTimeEntry({startedAt: this.$moment().toISOString()}).then(timeEntry => {
           this.$router.push({ name: "timer-item", params: {id: timeEntry.id }});
         });
       }

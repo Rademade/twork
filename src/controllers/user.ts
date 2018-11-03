@@ -1,12 +1,15 @@
 import { AppRequest, AppResponse } from "../interfaces";
-import { User } from "../entity/User";
-import { Workspace } from "../entity/Workspace";
-import { getRepository } from "typeorm";
+import { User, Workspace } from "../models";
 
 export const me = async function (req: AppRequest, res: AppResponse) {
   try {
-    const user = await getRepository(User).findOne({ where: { id: req.user.id }, relations: ["workspaces"]});
-    console.log(user);
+    const user = await User.findOne({
+      where: {id: req.user.id },
+      include: [{
+        model: Workspace,
+        attributes: ["id", "name"]
+      }],
+    });
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json(error);

@@ -2,9 +2,8 @@ import passport from "passport";
 import { Response, Request } from "express";
 import jwt from "jsonwebtoken";
 import * as _ from "lodash";
-import { Workspace } from "../entity/Workspace";
+import Workspace from "../models/Workspace.model";
 import { JwtUserPayload } from "../interfaces";
-import { getRepository } from "typeorm";
 
 // /api/v1/auth/google
 export const googleRedirectWithScope = passport.authenticate("google", {
@@ -15,8 +14,7 @@ export const googleCallbackHandlers = [
   async function (req: Request, res: Response) {
     try {
       const jwtUserPayload = _.pick(req.user, ["id", "name", "email"]) as JwtUserPayload;
-      const workspaceRepo = getRepository(Workspace);
-      const workspace = await workspaceRepo.findOne();
+      const workspace = await Workspace.findOne();
       jwtUserPayload.defaultWorkspaceId = workspace.id;
       const token = jwt.sign(jwtUserPayload, process.env.SECRET_KEY);
       const successRedirectUrl = "/sign/success?token=" + token;

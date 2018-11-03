@@ -1,7 +1,7 @@
 
-import User from "../models/User.model";
-import Workspace from "../models/Workspace.model";
+import { User, Workspace, WorkspaceUser } from "../models";
 import database from "../db";
+
 
 export  default class GoogleUserSignUpService {
   private user: User;
@@ -16,18 +16,16 @@ export  default class GoogleUserSignUpService {
   }
 
   public async signUp(): Promise<User> {
-    // this.validateRademadeUser();
-    await database.transaction(async _ => {
-      const user = await this.user.save();
-      const workspace = await this.getDefaultWorkspace();
-      if (workspace.users) {
-        workspace.users.push(user);
-      } else {
-        workspace.users = [user];
-      }
-      await workspace.save();
-    });
-    return this.user;
+    try {
+      await database.transaction(async _ => {
+        const user = await this.user.save();
+        const [workspace, ] = await Workspace.findOrCreate({where: {name: "Rademade"}});
+        await new WorkspaceUser({userId: user.id, workspaceId: workspace.id}).save();
+      });
+      return this.user;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   private validateRademadeUser() {
@@ -36,12 +34,4 @@ export  default class GoogleUserSignUpService {
       throw new Error("Only for rademade users");
     }
   }
-  private async getDefaultWorkspace(): Promise<Workspace> {
-    let workspace = await Workspace.findOne();
-    if (!workspace) {
-      workspace = await new Workspace({name: "Rademade"}).save();
-    }
-    return workspace;
-  }
-
 }

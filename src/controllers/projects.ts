@@ -1,13 +1,9 @@
 "use strict";
 
 import { Response, Request } from "express";
-import { Project }               from "../entity/Project";
-import { Workspace }             from "../entity/Workspace";
+import { Project, Workspace, Subscription }  from "../models";
 import * as _                from "lodash";
-import { getRepository, getCustomRepository } from "typeorm";
-import { WorkspaceRepository } from "../repositories/WorkspaceRepository";
 import webpush from "web-push";
-import Subscription from "../models/Subscription.model";
 /**
  * @apiDefine Success Success 200
  */
@@ -31,9 +27,8 @@ import Subscription from "../models/Subscription.model";
  * @apiError  (Error) {String} Server error
  */
 export const index = async (req: Request, res: Response) => {
-  const workspaceRepo = getCustomRepository(WorkspaceRepository);
-  const workspace = await workspaceRepo.default();
-  const projects = await Project.find({where: { workspaceId: workspace.id }, order: { createdAt: "DESC"}});
+  const workspace = await Workspace.findOne({where: { name: "Rademade"}});
+  const projects = await Project.findAll({where: { workspaceId: workspace.id }});
   res.json(projects);
 };
 
@@ -86,7 +81,6 @@ export const create =  async (req: Request, res: Response) => {
  */
 export const update = async (req: Request, res: Response) => {
   try {
-    const projectParams = _.pick(req.body, ["name"]);
     const project = await Project.findOne(req.params.id);
     project.name = req.body.name;
     await project.save();
@@ -104,9 +98,8 @@ export const update = async (req: Request, res: Response) => {
  */
 export const destroy = async (req: Request, res: Response) => {
   try {
-    const workspace = await getCustomRepository(WorkspaceRepository).default();
-    const project = await Project.findOne({ where: { workspaceId: workspace.id, id: req.params.id }});
-    await project.remove();
+    const project = await Project.findById(req.params.id);
+    await project.destroy();
     res.json(project);
   } catch (error) {
     // console.log(error);

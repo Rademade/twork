@@ -1,12 +1,9 @@
 "use strict";
 
 import { Response, Request }         from "express";
-import { TimeEntry } from "../entity/TimeEntry";
-import { NextFunction }              from "express-serve-static-core";
+import TimeEntry from "../models/TimeEntry.model";
+import Project from "../models/Project.model";
 import * as _                        from "lodash";
-import { prototype } from "nodemailer/lib/dkim";
-import { getRepository } from "typeorm";
-import { check } from "express-validator/check";
 
 const serializeTimeEntry = (timeEntry: TimeEntry) => {
   return {
@@ -48,17 +45,20 @@ const serializeTimeEntry = (timeEntry: TimeEntry) => {
  */
 
 export const index = async (req: Request, res: Response) => {
-  const timeEntries = await getRepository(TimeEntry).find({
-    where: { userId: req.user.id }, order: { createdAt: "DESC"},
-    relations: ["project"]
+  const timeEntries = await TimeEntry.findAll({
+    where: {userId: req.user.id},
+    order: [["createdAt", "DESC"]],
+    include: [Project]
   });
   res.json(timeEntries.map(timeEntry => serializeTimeEntry(timeEntry)));
 };
 
 
 export const show = async (req: Request, res: Response) => {
-  const timeEntryRepo = getRepository(TimeEntry);
-  const timeEntry = await timeEntryRepo.findOne({where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
+  const timeEntry = await TimeEntry.findOne({
+    where: { id: req.params.id, userId: req.user.id },
+    include: [Project]
+  });
   res.json(serializeTimeEntry(timeEntry));
 };
 
@@ -79,7 +79,13 @@ export const create =  async (req: Request, res: Response) => {
     timeEntryParams = _.pickBy(timeEntryParams, _.identity);
     const timeEntry = Object.assign(new TimeEntry(), timeEntryParams);
     timeEntry.userId = req.user.id;
-    await getRepository(TimeEntry).save(timeEntry);
+        // TODO: Create transaction
+    await TimeEntry.update(
+      {stoppedAt: new Date().toISOString()},
+      // tslint:disable-next-line:no-null-keyword
+      {where: { userId: req.user.id, stoppedAt: { $eq: null } }}
+    );
+    await timeEntry.save();
     res.json(serializeTimeEntry(timeEntry));
   } catch (error) {
     res.status(400).json(error);
@@ -89,15 +95,14 @@ export const create =  async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
   try {
-    const timeEntryRepo = getRepository(TimeEntry);
-    const timeEntry = await timeEntryRepo.findOne({where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
-    timeEntry.startedAt = req.body.startedAt;
-    timeEntry.stoppedAt = req.body.stoppedAt;
-    timeEntry.description = req.body.description;
-    timeEntry.billable = req.body.billable;
-    timeEntry.projectId = req.body.projectId;
-    await timeEntryRepo.update({ id: req.params.id, userId: req.user.id } , timeEntry);
-    res.json(serializeTimeEntry(timeEntry));
+    const timeEntry = await TimeEntry.findOne({
+      where: { id: req.params.id, userId: req.user.id },
+      include: [Project]
+    });
+    const timeEntryParams = _.pick(req.body, ["startedAt", "stoppedAt", "description", "billable", "projectId"]) as any;
+    await timeEntry.update(timeEntryParams);
+    const updatedTimeEntry =  await TimeEntry.findOne({ where: { id: req.params.id}, include: [Project]});
+    res.json(serializeTimeEntry(updatedTimeEntry));
   } catch (error) {
     res.status(400).json(error);
   }
@@ -111,9 +116,8 @@ export const update = async (req: Request, res: Response) => {
  */
 export const destroy = async (req: Request, res: Response) => {
   try {
-    const timeEntryRepo = getRepository(TimeEntry);
-    const timeEntry = await timeEntryRepo.findOne({ where: { id: req.params.id, userId: req.user.id }, relations: ["project"]});
-    const result =  await timeEntryRepo.delete(timeEntry.id);
+    const timeEntry = await TimeEntry.findOne({ where: { id: req.params.id, userId: req.user.id }});
+    await timeEntry.destroy();
     return res.json(serializeTimeEntry(timeEntry));
   } catch (error) {
     res.status(400).json(error);

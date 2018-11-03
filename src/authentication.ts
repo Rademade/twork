@@ -38,7 +38,7 @@ const initPassportStrategies = (passport: any) => {
   },
     async function (accessToken: any, refreshToken: any, googleProfile: any, done: Function) {
       try {
-        const user = await User.findById(googleProfile.id);
+        const user = await User.findOne({ where: { googleId: googleProfile.id}});
         if (user) {
           done(undefined, user);
         } else {

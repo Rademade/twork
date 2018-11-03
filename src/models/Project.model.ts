@@ -1,4 +1,4 @@
-import { Table, Column, Model, PrimaryKey, IsUUID, HasMany, BelongsTo, ForeignKey } from "sequelize-typescript";
+import { Table, Column, Model, PrimaryKey, IsUUID, HasMany, BelongsTo, ForeignKey, Sequelize, Default } from "sequelize-typescript";
 import TimeEntry from "./TimeEntry.model";
 import Workspace from "./Workspace.model";
 
@@ -8,19 +8,12 @@ import Workspace from "./Workspace.model";
 export default class Project extends Model<Project> {
   @IsUUID(4)
   @PrimaryKey
+  @Default(Sequelize.UUIDV4)
+  @Column({type: Sequelize.UUID})
   id: string;
 
   @Column
-  googleId: string;
-
-  @Column
-  imgUrl: string;
-
-  @Column
   name: string;
-
-  @Column
-  email: string;
 
   @ForeignKey(() => Workspace)
   @Column

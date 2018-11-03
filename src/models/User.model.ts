@@ -1,4 +1,4 @@
-import { Table, Column, Model, PrimaryKey, IsUUID, HasMany, BelongsToMany } from "sequelize-typescript";
+import { Table, Column, Model, PrimaryKey, IsUUID, HasMany, BelongsToMany, Sequelize, Default } from "sequelize-typescript";
 import TimeEntry from "./TimeEntry.model";
 import Workspace from "./Workspace.model";
 import WorkspaceUser from "./WorkspaceUser.model";
@@ -10,6 +10,9 @@ import Subscription from "./Subscription.model";
 export default class User extends Model<User> {
   @IsUUID(4)
   @PrimaryKey
+  @Default(Sequelize.UUIDV4)
+  @Column({type: Sequelize.UUID})
+  id: string;
 
   @Column
   googleId: string;
@@ -30,5 +33,5 @@ export default class User extends Model<User> {
   subscriptions: Subscription[];
 
   @BelongsToMany(() => Workspace, () => WorkspaceUser)
-  worspaces: Workspace[];
+  workspaces: Workspace[];
 }

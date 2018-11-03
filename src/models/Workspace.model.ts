@@ -1,15 +1,16 @@
 
-import { Table, Column, Model, PrimaryKey, IsUUID, BelongsToMany } from "sequelize-typescript";
+import { Table, Column, Model, PrimaryKey, IsUUID, BelongsToMany, Sequelize, Default } from "sequelize-typescript";
 import WorkspaceUser from "./WorkspaceUser.model";
 import User from "./User.model";
 
 @Table({
-  tableName: "workspace"
+  timestamps: true
 })
 export default class Workspace extends Model<Workspace> {
   @IsUUID(4)
   @PrimaryKey
-  @Column
+  @Default(Sequelize.UUIDV4)
+  @Column({type: Sequelize.UUID})
   id: string;
 
   @Column

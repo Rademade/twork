@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}">
+  <div>
     <v-list-tile
       route
       :key="timeEntry.description"
@@ -7,21 +7,26 @@
       ripple
     >
       <v-list-tile-content ref="timeEntryContent">
-        <v-list-tile-title>{{ timeEntry.description }}</v-list-tile-title>
+        <v-list-tile-title>
+          <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}">
+            {{ timeEntry.description }}
+          </router-link>
+        </v-list-tile-title>
         <v-list-tile-sub-title class="text--primary">{{ timeEntry.projectName }}</v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-action>
         <v-list-tile-action-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-action-text>
-         <v-btn color="teal" outline fab small dark>
+         <v-btn color="teal" outline fab small dark @click="restartTimeEntry">
           <v-icon> play_arrow </v-icon>
          </v-btn>
       </v-list-tile-action>
     </v-list-tile>
-  </router-link>
+  </div>
 </template>
 
 <script>
-import Hummer from "hammerjs";
+import Hammer from "hammerjs";
+import { mapActions } from 'vuex';
 export default {
   props: ['timeEntry'],
   data() {
@@ -34,6 +39,13 @@ export default {
     this.initTimeEntrySwipe();
   },
   methods: {
+    ...mapActions({
+      deleteTimeEntry: "timers/deleteTimeEntry",
+      createTimeEntry: "timers/createTimeEntry"
+    }),
+    restartTimeEntry() {
+      this.createTimeEntry({...this.timeEntry, id: null, stoppedAt: null, startedAt: new Date().toISOString()})
+    },
     initTimeEntrySwipe() {
       const swipeArea = this.$refs.timeEntryContent;
       this.swipeManager = new Hammer.Manager(this.$el);
@@ -48,7 +60,7 @@ export default {
         if (direction === 4 || direction === 2) {
           if (deltaX > 150) {
             swipeArea.style.transform = deleteTranslate3d;
-            console.log('init delete', deltaX);
+            this.deleteTimeEntry(this.timeEntry.id);
           } else {
             setTimeout(() => {
               swipeArea.style.transform = initialTranslate3d;

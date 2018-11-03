@@ -21,9 +21,9 @@ export default class TimeEntry {
   isStopped() { return this.isStarted() && !!this.stoppedAt }
   unixTimestamp() { return moment(this.stoppedAt).format('X') }
   startedAtTime() { return this.startedAt && moment(this.startedAt).format('hh:mm A') }
-  startedAtTime24() { return this.startedAt && moment(this.startedAt).format('HH:MM') }
+  startedAtTime24() { return this.startedAt && moment(this.startedAt).format('HH:mm') }
   stoppedAtTime() { return this.stoppedAt && moment(this.stoppedAt).format('hh:mm A') }
-  stoppedAtTime24() { return this.stoppedAt && moment(this.stoppedAt).format('HH:MM') }
+  stoppedAtTime24() { return this.stoppedAt && moment(this.stoppedAt).format('HH:mm') }
   startDate() { return this.startedAt && moment(this.startedAt).format('YYYY-MM-DD') }
   stopDate() { return this.stoppedAt && moment(this.stoppedAt).format('YYYY-MM-DD') }
   duration() {

@@ -4,7 +4,7 @@ export type JwtUserPayload = {
   id: string,
   name: string;
   email: string;
-  defaultWorkspaceId: number;
+  defaultWorkspaceId: string;
 };
 export interface AppRequest extends Request {
   user: JwtUserPayload;
