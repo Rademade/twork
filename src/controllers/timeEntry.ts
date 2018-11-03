@@ -77,15 +77,16 @@ export const create =  async (req: Request, res: Response) => {
   try {
     let timeEntryParams = _.pick(req.body, ["id", "startedAt", "stoppedAt", "description", "billable", "projectId", "workspaceId"]) as any;
     timeEntryParams = _.pickBy(timeEntryParams, _.identity);
-    const timeEntry = Object.assign(new TimeEntry(), timeEntryParams);
-    timeEntry.userId = req.user.id;
         // TODO: Create transaction
     await TimeEntry.update(
       {stoppedAt: new Date().toISOString()},
       // tslint:disable-next-line:no-null-keyword
       {where: { userId: req.user.id, stoppedAt: { $eq: null } }}
     );
-    await timeEntry.save();
+    const timeEntry = await TimeEntry.create({
+      ...timeEntryParams,
+      userId: req.user.id
+    });
     res.json(serializeTimeEntry(timeEntry));
   } catch (error) {
     res.status(400).json(error);
