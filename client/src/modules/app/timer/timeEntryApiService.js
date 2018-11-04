@@ -5,7 +5,6 @@ import configs from "@/configs";
 import TworkIndexedDBStore, { TIME_ENTRIES_STORE_NAME, SYNC_TIME_ENTRIES_STORE_NAME } from "@/core/services/TworkIndexedDBStore";
 
 const TIME_ENTRY_API_PATH = '/time_entries';
-
 const timeEntryApiService = (function() {
   if (('indexedDB' in window) && configs.isProduction) {
     const timeEntriesStore = new TworkIndexedDBStore(TIME_ENTRIES_STORE_NAME);
@@ -20,5 +19,6 @@ const timeEntryApiService = (function() {
     return new ApiService(TIME_ENTRY_API_PATH);
   }
 }());
+
 
 export default timeEntryApiService;

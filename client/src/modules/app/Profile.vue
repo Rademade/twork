@@ -28,6 +28,7 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" flat @click="logout()">Logout</v-btn>
+            <v-btn color="primary" flat @click="deviceInfo()">device info</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -48,6 +49,13 @@
     methods: {
       logout() {
         userAuthService.logout().then(() => this.$router.push({name: "home"}));
+      },
+      deviceInfo() {
+        alert(JSON.stringify({
+          indexedDB: ('indexedDB' in window),
+          backgroundSync: ('SyncManager' in window),
+          seviceWorker: ('serviceWorker' in navigator)
+        }))
       }
     },
   }
