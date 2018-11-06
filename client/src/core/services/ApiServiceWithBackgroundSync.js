@@ -44,39 +44,44 @@ export default class ApiServiceWithBackgroundSync extends ApiServiceWithCache {
   }
 
   async registerSyncTaskWithOperationsSyncronozation(data, operationType) {
-    let taskRecord = { id: data.id, data: data, operationType: null };
-    const sw = await navigator.serviceWorker.ready;
-    switch (operationType) {
-      case 'create': {
-        taskRecord.operationType = 'create';
-        await this.resourceSyncStore.write(taskRecord);
-        sw.sync.register(this.resourceSyncTaskName);
-        break;
-      }
-      case 'update': {
-        const lastTaskRecord = await this.resourceSyncStore.read(data.id);
-        if (lastTaskRecord && lastTaskRecord.operationType === 'create') {
+    try {
+      let taskRecord = { id: data.id, data: data, operationType: null };
+      const sw = await navigator.serviceWorker.ready;
+      switch (operationType) {
+        case 'create': {
           taskRecord.operationType = 'create';
-        } else {
-          taskRecord.operationType = 'update';
-        }
-        await this.resourceSyncStore.write(taskRecord);
-        sw.sync.register(this.resourceSyncTaskName);
-        break;
-      }
-      case 'delete': {
-        const lastTaskRecord = await this.resourceSyncStore.read(data.id);
-        if (lastTaskRecord && lastTaskRecord.operationType == 'create') {
-          await this.resourceSyncStore.delete(taskRecord.id);
-        } else {
-          taskRecord.operationType = 'delete';
+          alert(JSON.stringify(taskRecord));
           await this.resourceSyncStore.write(taskRecord);
           sw.sync.register(this.resourceSyncTaskName);
+          break;
         }
-        break;
+        case 'update': {
+          const lastTaskRecord = await this.resourceSyncStore.read(data.id);
+          if (lastTaskRecord && lastTaskRecord.operationType === 'create') {
+            taskRecord.operationType = 'create';
+          } else {
+            taskRecord.operationType = 'update';
+          }
+          await this.resourceSyncStore.write(taskRecord);
+          sw.sync.register(this.resourceSyncTaskName);
+          break;
+        }
+        case 'delete': {
+          const lastTaskRecord = await this.resourceSyncStore.read(data.id);
+          if (lastTaskRecord && lastTaskRecord.operationType == 'create') {
+            await this.resourceSyncStore.delete(taskRecord.id);
+          } else {
+            taskRecord.operationType = 'delete';
+            await this.resourceSyncStore.write(taskRecord);
+            sw.sync.register(this.resourceSyncTaskName);
+          }
+          break;
+        }
+        default:
+          break;
       }
-      default:
-        break;
+    } catch (error) {
+      alert(error)
     }
   }
 }

@@ -289,7 +289,6 @@ const handleTimeEntrySyncEvent = function () {
 
 if ('SyncManager' in self) {
   self.addEventListener('sync', function (event) {
-    console.log('Sync event triggered');
     if (event.tag == syncTimeEntiriesStore.getName()) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
