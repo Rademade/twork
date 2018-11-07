@@ -53,7 +53,7 @@ export default class ApiServiceWithBackgroundSync extends ApiServiceWithCache {
           alert(JSON.stringify(taskRecord));
           await this.resourceSyncStore.write(taskRecord);
           sw.sync.register(this.resourceSyncTaskName);
-          const currentData =  await this.resourceSyncStore.readAllData();
+          const currentData = await this.resourceSyncStore.readAllData();
           alert(currentData);
           break;
         }

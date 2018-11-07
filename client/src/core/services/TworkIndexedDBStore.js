@@ -67,7 +67,7 @@ class TworkIndexedDBStore {
 
   async readAllData() {
     try {
-      const db = await this.init();
+      const db = await idb.open(TWORK_INDEXEDDB_GLOBAL_STORE_NAME);
       let tx = db.transaction(this.objectStoreName, 'readonly');
       let store = tx.objectStore(this.objectStoreName);
       return store.getAll();
