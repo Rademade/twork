@@ -6,6 +6,10 @@
 
 <script>
 export default  {
+  created() {
+    window.addEventListener('online', () => { alert("You are online!")})
+    window.addEventListener('offline', () => { alert("You are offline!")})
+  }
 }
 </script>
 
