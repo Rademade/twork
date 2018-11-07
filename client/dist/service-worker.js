@@ -1,4 +1,4 @@
-importScripts("js/idb.js", "js/sw-background-sync.js", "js/sw-push.js", "/precache-manifest.ce490717494d915afcbe27402b621b7d.js", "https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
+importScripts("js/idb.js", "js/sw-background-sync.js", "js/sw-push.js", "/precache-manifest.e1a8e5d661c47763fb7f7d9db2b462f9.js", "https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 
 self.workbox.precaching.precacheAndRoute(self.__precacheManifest);
