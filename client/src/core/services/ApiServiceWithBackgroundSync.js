@@ -50,11 +50,9 @@ export default class ApiServiceWithBackgroundSync extends ApiServiceWithCache {
       switch (operationType) {
         case 'create': {
           taskRecord.operationType = 'create';
-          alert(JSON.stringify(taskRecord));
           await this.resourceSyncStore.write(taskRecord);
           sw.sync.register(this.resourceSyncTaskName);
           const currentData = await this.resourceSyncStore.readAllData();
-          alert(JSON.stringify(currentData));
           break;
         }
         case 'update': {

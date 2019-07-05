@@ -11,14 +11,10 @@ export default  {
   created() {
     const timeEntriesSyncStore = new TworkIndexedDBStore('sync-time-entries');
     window.addEventListener('online', () => {
-       alert("You are online!");
        const data = timeEntriesSyncStore.readAllData();
-       alert(JSON.stringify(data));
     })
     window.addEventListener('offline', () => {
-      alert("You are offline!");
       const data = timeEntriesSyncStore.readAllData();
-      alert(JSON.stringify(data));
     })
   }
 }
