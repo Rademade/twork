@@ -17,7 +17,7 @@ export  default class GoogleUserSignUpService {
 
   public async signUp(): Promise<User> {
     try {
-      await database.transaction(async _ => {
+      await database.transaction(async (_: any) => {
         const user = await this.user.save();
         const [workspace, ] = await Workspace.findOrCreate({where: {name: "Rademade"}});
         await new WorkspaceUser({userId: user.id, workspaceId: workspace.id}).save();

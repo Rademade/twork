@@ -3,7 +3,7 @@ import app from "./app";
 import "reflect-metadata";
 import database from "./db";
 
-database.authenticate().then(_ => {
+database.authenticate().then((_: any) => {
 
   app.use(errorHandler());
 
@@ -16,5 +16,5 @@ database.authenticate().then(_ => {
     console.log("  Press CTRL-C to stop\n");
   });
 
-}).catch(error => console.log(error));
+}).catch((error: any) => console.log(error));
 
