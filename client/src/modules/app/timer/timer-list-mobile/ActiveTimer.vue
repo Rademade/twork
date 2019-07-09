@@ -1,17 +1,18 @@
 <template>
-  <v-card fixed>
+  <v-card class="elevation-4 mb-4" fixed>
     <v-card-title primary-title>
       <div>
         <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}">
-          <h3>{{ timeEntry.description }}</h3>
+          <h3 class="title blue--text text--darken-4">{{ timeEntry.description }}</h3>
         </router-link>
-        <div>{{timeEntry.projectName}}</div>
+        <div class="subheading grey--text">{{timeEntry.projectName}}</div>
       </div>
     </v-card-title>
+    <v-divider></v-divider>
     <v-card-actions>
       <TrackingBarTimer class="pa-2"/>
       <v-spacer></v-spacer>
-      <v-btn flat color="error" @click="stopTimeEntry">stop</v-btn>
+      <v-btn flat color="error" class="red--text darken-4" @click="stopTimeEntry">stop</v-btn>
     </v-card-actions>
   </v-card>
 </template>

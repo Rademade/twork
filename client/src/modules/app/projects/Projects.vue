@@ -1,29 +1,33 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row>
     <v-flex xs12>
       <v-toolbar flat color="white">
-        <v-toolbar-title c>Projects</v-toolbar-title>
+        <v-flex xs6 class="pt-3">
+          <v-toolbar-title>Projects</v-toolbar-title>
+        </v-flex>
         <v-spacer></v-spacer>
+        <v-flex xs6 md3 justiify-end>
           <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            class=""
+          ></v-text-field>
+        </v-flex>
       </v-toolbar>
       <v-data-table
         :headers="headers"
         :items="projects"
         :search="search"
         hide-actions
-        class="elevation-1"
       >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.name }}</td>
           <!-- <td class="text-xs-right">{{ props.item.status }}</td>
           <td class="text-xs-right">{{ props.item.team }}</td> -->
-          <td class="justify-center layout px-0">
+          <td class="layout justify-end">
             <v-icon
               small
               class="mr-2"
@@ -41,7 +45,7 @@
         </template>
       </v-data-table>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" color="pink" dark fixed bottom right fab>
+        <v-btn slot="activator" color="red darken-4" dark fixed bottom right fab>
           <v-icon>add</v-icon>
         </v-btn>
         <v-card>
@@ -61,8 +65,8 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+            <v-btn color="blue darken-4" flat @click.native="close">Cancel</v-btn>
+            <v-btn color="blue darken-4" flat @click.native="save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -74,7 +78,7 @@
     >
       {{ snackbarText }}
       <v-btn
-        color="pink"
+        color="red darken-4"
         flat
         @click="snackbar=false"
       >
@@ -96,7 +100,7 @@
         { text: 'Name', align: 'left', sortable: true, value: 'name'},
         // { text: 'Status', value: 'status', sortable: true },
         // { text: 'Team', value: 'team', sortable: false },
-        { text: 'Actions', sortable: false }
+        { text: 'Actions', align: 'right', sortable: false }
       ],
       desserts: [],
       editedIndex: -1,
@@ -108,7 +112,7 @@
         projects: "projects/projects"
       }),
       formTitle () {
-        return this.editedIndex === -1 ? 'New Project' : 'Edit Project'
+        return this.editedIndex === -1 ? 'Create new project' : 'Edit project'
       }
     },
     methods: {

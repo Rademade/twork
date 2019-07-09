@@ -104,14 +104,14 @@
         <v-btn color="primary" @click="submit">submit</v-btn>
         <v-btn router-link :to="{ name: 'timer-list' }">back</v-btn>
       </form>
-      <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
+      <v-progress-circular v-else indeterminate color="blue darken-4"></v-progress-circular>
       <v-snackbar
         v-model="snackbar"
         :bottom="true"
         :timeout="3000"
       >
         Time entry saved
-        <v-btn color="pink" flat @click="snackbar=false"> Close </v-btn>
+        <v-btn color="red darken-4" flat @click="snackbar=false"> Close </v-btn>
       </v-snackbar>
     </v-flex>
   </v-layout>

@@ -3,10 +3,10 @@
     <v-navigation-drawer
         v-model="drawer"
         :mini-variant.sync="isMini"
-        clipped
         fixed
         app
         :width="140"
+        clipped
       >
         <v-list dense>
           <v-list-tile
@@ -22,12 +22,12 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar app fixed clipped-left>
+      <v-toolbar app fixed color="white" clipped-left :height="64">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title>Twork</v-toolbar-title>
+        <v-toolbar-title class="font-weight-black headline blue--text text--darken-4" >TWORK</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn flat>
+          <v-btn flat href icon>
             <Profile/>
           </v-btn>
         </v-toolbar-items>
@@ -44,7 +44,7 @@
     data() {
       return {
         isMini: false,
-        drawer: true,
+        drawer: false,
         navigation: [
           { title: "Timer", ico: "alarm", route: "timer-list"},
           { title: "Projects", ico: "work", route: "projects"},
