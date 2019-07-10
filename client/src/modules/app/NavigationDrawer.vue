@@ -5,10 +5,10 @@
         :mini-variant.sync="isMini"
         fixed
         app
-        :width="140"
+        :width="200"
         clipped
       >
-        <v-list dense>
+        <v-list>
           <v-list-tile
             v-for="nav in navigation"
             :key="nav.title"
@@ -16,8 +16,8 @@
             <v-list-tile-action>
               <v-icon>{{nav.ico}}</v-icon>
             </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ nav.title }}</v-list-tile-title>
+            <v-list-tile-content class="py-2">
+              <v-list-tile-title class="body-2">{{ nav.title }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
