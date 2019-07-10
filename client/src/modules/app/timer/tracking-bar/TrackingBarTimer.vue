@@ -1,5 +1,5 @@
 <template>
-  <input class="timer__time" v-model="durationFormatted" readonly/>
+  <input class="timer__time subheading" v-model="durationFormatted" readonly/>
 </template>
 
 <script>

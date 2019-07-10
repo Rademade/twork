@@ -7,6 +7,7 @@ import store from './store'
 import './registerServiceWorker'
 import * as vueMoment from 'vue-moment'
 import 'vuetify/dist/vuetify.min.css'
+import colors from 'vuetify/es5/util/colors'
 
 import {
   lodashPlugin,
@@ -16,7 +17,12 @@ import {
 
 import clickOutsideDirective from './core/directives/clickOutside';
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.blueGrey.darken4,
+    accent: colors.blueGrey.darken2
+  }
+})
 Vue.use(momentPlugin)
 Vue.use(lodashPlugin)
 Vue.use(storePlugin)

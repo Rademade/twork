@@ -3,12 +3,12 @@
     <v-navigation-drawer
         v-model="drawer"
         :mini-variant.sync="isMini"
-        clipped
         fixed
         app
-        :width="140"
+        :width="200"
+        clipped
       >
-        <v-list dense>
+        <v-list>
           <v-list-tile
             v-for="nav in navigation"
             :key="nav.title"
@@ -16,18 +16,18 @@
             <v-list-tile-action>
               <v-icon>{{nav.ico}}</v-icon>
             </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ nav.title }}</v-list-tile-title>
+            <v-list-tile-content class="py-2">
+              <v-list-tile-title class="body-2">{{ nav.title }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar app fixed clipped-left>
+      <v-toolbar app fixed color="white" clipped-left :height="64">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title>Twork</v-toolbar-title>
+        <v-toolbar-title class="font-weight-black headline primary--text" >TWORK</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn flat>
+          <v-btn flat href icon>
             <Profile/>
           </v-btn>
         </v-toolbar-items>
@@ -44,7 +44,7 @@
     data() {
       return {
         isMini: false,
-        drawer: true,
+        drawer: false,
         navigation: [
           { title: "Timer", ico: "alarm", route: "timer-list"},
           { title: "Projects", ico: "work", route: "projects"},

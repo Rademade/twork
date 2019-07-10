@@ -8,7 +8,7 @@
     >
       <v-avatar
             :tile="false"
-            :size="30"
+            :size="36"
             color="grey lighten-4"
             slot="activator"
           >

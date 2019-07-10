@@ -2,13 +2,21 @@
   <v-app id="inspire" >
     <NavigationDrawer/>
     <v-content>
-      <v-container fluid fill-height>
+      <v-container fluid>
         <router-view></router-view>
       </v-container>
+
+
     </v-content>
-    <v-footer app>
-      <span>&copy; 2018</span>
+    <v-footer height="auto">
+      <v-container>
+        <v-layout>
+          <v-flex xs12 class="grey--text"><span> Made by <a class="grey--text underline">Rademade </a> &copy; 2019</span></v-flex>
+        </v-layout>
+      </v-container>
     </v-footer>
+
+
   </v-app>
 </template>
 

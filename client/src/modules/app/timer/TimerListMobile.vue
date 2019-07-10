@@ -1,16 +1,16 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 offset-sm3 v-if="activeTimeEntry">
+    <v-flex xs12 sm12 v-if="activeTimeEntry">
       <ActiveTimer/>
     </v-flex>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12 sm12>
       <v-card>
         <div v-for="(timeEntries, date) in timeEntryGroups" :key="date">
           <TimerListGroup two-line subheader :timeEntriesDate="date" :timeEntries="timeEntries"> </TimerListGroup>
           <v-divider></v-divider>
         </div>
         <v-btn
-              color="pink"
+              color="red darken-4"
               dark
               fixed
               bottom

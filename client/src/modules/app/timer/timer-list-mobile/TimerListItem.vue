@@ -1,29 +1,36 @@
 <template>
   <div>
-    <v-list-tile
-      route
-      :key="timeEntry.description"
-      avatar
-      ripple
-    >
-      <v-list-tile-action>
-        <v-icon v-if="timeEntry.unsynced" color="pink">warning</v-icon>
-      </v-list-tile-action>
-      <v-list-tile-content ref="timeEntryContent">
-        <v-list-tile-title>
-          <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}">
-            {{ timeEntry.description }}
-          </router-link>
-        </v-list-tile-title>
-        <v-list-tile-sub-title class="text--primary">{{ timeEntry.projectName }}</v-list-tile-sub-title>
-      </v-list-tile-content>
-      <v-list-tile-action>
-        <v-list-tile-action-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-action-text>
-        <v-btn color="teal" outline fab small dark @click="restartTimeEntry">
-          <v-icon> play_arrow </v-icon>
-        </v-btn>
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-hover>
+      <v-list-tile
+        slot-scope="{ hover }"
+        route
+        :key="timeEntry.description"
+        avatar
+        ripple
+        :class="`${hover?  'grey lighten-3' : 'light'}`"
+        @click="$router.push({name: 'timer-item', params: { id: timeEntry.id }})"
+
+      >
+        <v-list-tile-action v-if="timeEntry.unsynced">
+          <v-icon color="red">warning</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content ref="timeEntryContent">
+          <v-list-tile-title >
+            <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}" class="grey--text text--darken-4">
+              {{ timeEntry.description }}
+            </router-link>
+          </v-list-tile-title>
+          <v-list-tile-sub-title class="grey--text darken-1">{{ timeEntry.projectName }}</v-list-tile-sub-title>
+        </v-list-tile-content>
+        <v-list-tile-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-text>
+        <v-list-tile-action>
+          <v-btn color="primary" outline fab small dark @click="restartTimeEntry">
+            <v-icon> autorenew </v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-hover>
+
   </div>
 </template>
 

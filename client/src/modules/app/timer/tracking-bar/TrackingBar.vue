@@ -31,10 +31,10 @@
               </v-flex>
               <v-flex lg3>
                 <div>
-                  <v-btn v-if="!isTimerStarted" fab dark color="teal" v-on:click="onStartButtonClick">
+                  <v-btn v-if="!isTimerStarted" fab dark color="blue darken-4" v-on:click="onStartButtonClick">
                     <v-icon dark>play_arrow</v-icon>
                   </v-btn>
-                  <v-btn v-if="isTimerStarted" fab dark color="pink" v-on:click="onStopButtonClick">
+                  <v-btn v-if="isTimerStarted" fab dark color="red darken-4" v-on:click="onStopButtonClick">
                     <v-icon dark>stop</v-icon>
                   </v-btn>
                 </div>
