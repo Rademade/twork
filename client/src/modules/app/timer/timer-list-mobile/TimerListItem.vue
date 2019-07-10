@@ -24,8 +24,8 @@
         </v-list-tile-content>
         <v-list-tile-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-text>
         <v-list-tile-action>
-          <v-btn color="blue darken-4" outline fab small dark @click="restartTimeEntry">
-            <v-icon> repeat </v-icon>
+          <v-btn color="primary" outline fab small dark @click="restartTimeEntry">
+            <v-icon> autorenew </v-icon>
           </v-btn>
         </v-list-tile-action>
       </v-list-tile>

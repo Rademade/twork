@@ -2,17 +2,23 @@
   <div class="sign">
     <div class="sign">
       <header class="sign-header">
-        <span class="sign-header__logo">TWork</span>
+        <span class="sign-header__logo">TWORK</span>
+        <sub class="sign-header__tagline"> by Rademade</sub>
       </header>
       <div class="sign__content">
-        <p class="sign__title">You are almost there!</p>
         <div class="sign__form">
-          <a class="sign__button sign__button--icon" :href="googleAuthProviderLink">
-            <svg class="sign__icon">
-              <use xlink:href="#google"></use>
-            </svg>
+          <p class="sign__title">You are almost there!</p>
+          <v-btn
+          class="green-darken-1 mt-5"
+          light
+          outline
+          large
+          :href="googleAuthProviderLink"
+          @click="$router.push('/sign/in')"
+          >
+            <v-icon class="pr-2">fab fa-google</v-icon>
             Authorize with Google
-          </a>
+          </v-btn>
         </div>
       </div>
     </div>
@@ -21,7 +27,7 @@
 
 <script>
   import configs from "@/configs";
-  import Google from "@/assets/google.svg";
+  import google from "@/assets/google.svg";
 
   export default {
     name: 'SignIn',
@@ -33,7 +39,7 @@
   }
 </script>
 
-<style lang="css" scoped>
+<style lang="postcss" scoped>
   .sign-header {
     position: relative;
     display: flex;
@@ -49,10 +55,18 @@
 
   .sign-header__logo {
     display: block;
-    font-size: 1.25rem;
+    font-size: 1.7rem;
     font-weight: 700;
-    color: #1fc881;
+    color: #263238;
+    line-height: 1;
   }
+
+  .sign-header__tagline {
+    font-size: 0.7rem;
+    color: #263238;
+    padding-left: 5px;
+  }
+
 
   .sign__content {
     display: flex;
@@ -64,11 +78,7 @@
     text-align: center;
     box-sizing: border-box;
   }
-  .sign__title {
-    margin-bottom: 50px;
-    font-size: 35px;
-    line-height: 1.2;
-  }
+
 
   .sign__form {
     display: inline-block;
@@ -80,39 +90,22 @@
     box-sizing: border-box;
   }
 
-  .sign__button {
-    position: relative;
-    display: inline-block;
-    height: 50px;
-    padding: 0 20px;
-    font-size: 18px;
-    line-height: 46px;
-    color: #fff;
-    border: 2px solid #2ec783;
-    background-color: #2ec783;
-    vertical-align: top;
-    white-space: nowrap;
-    cursor: pointer;
-    outline: 0;
-    transition: color .3s ease-in-out,background .3s ease-in-out;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-
+  @media all and (max-width: 500px) {
+    .sign__form {
+      padding: 16px;
+    }
   }
 
-  .sign__button--icon {
-    padding-left: 50px;
+  .sign__title {
+    margin-bottom: 50px;
+    font-size: 35px;
+    line-height: 1.2;
   }
 
-  .sign__icon {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 25px;
-    height: 25px;
-    fill: #fff;
-    border-radius: 5px;
-    transition: fill .3s ease
+  @media all and (max-width: 500px) {
+    .sign__title {
+      font-size: 24px;
+    }
   }
+
 </style>

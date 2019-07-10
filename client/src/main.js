@@ -19,7 +19,8 @@ import clickOutsideDirective from './core/directives/clickOutside';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.blue.darken4
+    primary: colors.blueGrey.darken4,
+    accent: colors.blueGrey.darken2
   }
 })
 Vue.use(momentPlugin)

@@ -11,13 +11,12 @@
           min-width="290px"
           full-width
           offset-y
-          lazy
         >
           <v-text-field
             v-model="dateRange.start"
             prepend-icon="event"
             slot="activator"
-            label="Date"
+            label="Start date"
             readonly
           />
           <v-date-picker
@@ -39,13 +38,12 @@
           min-width="290px"
           full-width
           offset-y
-          lazy
         >
           <v-text-field
             v-model="dateRange.end"
             prepend-icon="event"
             slot="activator"
-            label="Date"
+            label="End date"
             readonly
           />
           <v-date-picker

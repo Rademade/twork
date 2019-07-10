@@ -3,7 +3,7 @@
     <v-card-title primary-title>
       <div>
         <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}">
-          <h3 class="title blue--text text--darken-4">{{ timeEntry.description }}</h3>
+          <h3 class="title primary--text">{{ timeEntry.description }}</h3>
         </router-link>
         <div class="subheading grey--text">{{timeEntry.projectName}}</div>
       </div>
