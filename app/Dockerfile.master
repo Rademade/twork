@@ -16,7 +16,7 @@ RUN npm run build
 
 FROM node:lts-jessie
 
-ENV NODE_ENV producton
+ENV NODE_ENV production
 
 ENV INSTALL_PATH /app
 RUN mkdir -p $INSTALL_PATH
