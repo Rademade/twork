@@ -29,9 +29,6 @@ COPY ./migrations migrations
 COPY ./config config
 COPY --from=0 /app/dist dist
 
-npm install -g sequelize-cli
-npm install -g sequelize
-
 RUN npm install
 
 ENTRYPOINT /entrypoint.sh
