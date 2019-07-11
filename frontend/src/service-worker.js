@@ -16,6 +16,21 @@ self.workbox.routing.registerRoute(
     ],
   }),
 );
+// Cache fontawesome fonts
+self.workbox.routing.registerRoute(
+  new RegExp('https://use.fontawesome.com/(.*)'),
+  self.workbox.strategies.cacheFirst({
+    cacheName: 'fontawesome-fonts',
+    plugins: [
+      new self.workbox.expiration.Plugin({
+        maxEntries: 30,
+      }),
+      new self.workbox.cacheableResponse.Plugin({
+        statuses: [0, 200]
+      }),
+    ],
+  }),
+);
 
 // Cache images
 self.workbox.routing.registerRoute(
