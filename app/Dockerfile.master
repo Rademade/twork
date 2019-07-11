@@ -1,0 +1,17 @@
+FROM node:lts-jessie
+
+ENV INSTALL_PATH /app
+
+RUN mkdir -p $INSTALL_PATH
+
+WORKDIR $INSTALL_PATH
+
+COPY . .
+
+ENV NODE_ENV production
+
+RUN npm install
+
+RUN npm run build
+
+ENTRYPOINT /entrypoint.sh

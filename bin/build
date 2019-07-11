@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -a && source .env
+
+# nginx
+docker build -t ${REGISTRY_URL}/nginx:${BRANCH} -f ./frontend/Dockerfile.${BRANCH} frontend
+
+# app
+docker build -t ${REGISTRY_URL}/app:${BRANCH} -f ./app/Dockerfile.${BRANCH} app
+
+docker push ${REGISTRY_URL}/app
+docker push ${REGISTRY_URL}/nginx

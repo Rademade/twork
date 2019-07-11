@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.createTable('Project', {
@@ -149,7 +150,7 @@ module.exports = {
         type: Sequelize.DATE
       },
     });
-    return;
+    return Promise.resolve();
   },
   down: (queryInterface, Sequelize) => {
     queryInterface.dropTable('Project');
