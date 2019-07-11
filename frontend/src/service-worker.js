@@ -36,12 +36,12 @@ self.workbox.routing.registerRoute(
 );
 
 // Cache css/js
-// self.workbox.routing.registerRoute(
-//   /\.(?:js|css|html)$/,
-//   self.workbox.strategies.staleWhileRevalidate({
-//     cacheName: 'static-resources',
-//   }),
-// );
+self.workbox.routing.registerRoute(
+  /\.(?:js|css|html)$/,
+  self.workbox.strategies.staleWhileRevalidate({
+    cacheName: 'static-resources',
+  }),
+);
 
 // Fallback to cache for API XHR
 // self.workbox.routing.registerRoute(

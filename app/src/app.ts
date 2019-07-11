@@ -45,34 +45,4 @@ import { NextFunction } from "express";
 app.use("/apidoc", express.static("apidoc"));
 buildRoutingTable(app);
 
-const staticDir = path.resolve(__dirname, "../client/dist");
-
-app.use(express.static(staticDir));
-app.use("/", (req: Request, res: Response, next: NextFunction) => {
-  console.log("Inside / handler");
-
-  res.sendFile(staticDir + "/index.html");
-});
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404);
-  console.log("entered into handler", req.url);
-  // respond with html page
-  if (req.accepts("html")) {
-    res.redirect("/");
-    return;
-  }
-
-  // respond with json
-  if (req.accepts("json")) {
-    res.send({ error: "Not found" });
-    return;
-  }
-
-  // default to plain-text. send()
-  res.type("txt").send("Not found");
-});
-
-
-
 export default app;
