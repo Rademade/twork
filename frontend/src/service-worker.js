@@ -43,6 +43,12 @@ self.workbox.routing.registerRoute(
   }),
 );
 
+self.workbox.routing.registerNavigationRoute(
+  // Assuming '/single-page-app.html' has been precached,
+  // look up its corresponding cache key.
+  self.workbox.precaching.getCacheKeyForURL('/index.html')
+);
+
 // Fallback to cache for API XHR
 // self.workbox.routing.registerRoute(
 //   /.*\/api\/v1\/.*$/,
