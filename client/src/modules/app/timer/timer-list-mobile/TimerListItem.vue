@@ -7,7 +7,7 @@
         :key="timeEntry.description"
         avatar
         ripple
-        :class="`${hover?  'grey lighten-3' : 'light'}`"
+        :class="`${hover?  'grey lighten-4' : 'light'}`"
         @click="$router.push({name: 'timer-item', params: { id: timeEntry.id }})"
 
       >
@@ -22,11 +22,10 @@
           </v-list-tile-title>
           <v-list-tile-sub-title class="grey--text darken-1">{{ timeEntry.projectName }}</v-list-tile-sub-title>
         </v-list-tile-content>
-        <v-list-tile-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-text>
+        <v-list-tile-text class="font-weight-bold px-1">{{ timeEntry.getDurationText() }} </v-list-tile-text>
         <v-list-tile-action>
-          <v-btn color="primary" outline fab small dark @click="restartTimeEntry">
-            <v-icon> autorenew </v-icon>
-          </v-btn>
+          <v-icon color="grey lighten-1" @click="restartTimeEntry"> autorenew </v-icon>
+          <v-icon color="grey lighten-1" @click="destroy(timeEntry.id)"> delete </v-icon>
         </v-list-tile-action>
       </v-list-tile>
     </v-hover>
@@ -37,6 +36,7 @@
 <script>
 import Hammer from "hammerjs";
 import { mapActions } from 'vuex';
+
 export default {
   props: ['timeEntry'],
   data() {
@@ -56,6 +56,7 @@ export default {
     restartTimeEntry() {
       this.createTimeEntry({...this.timeEntry, id: null, stoppedAt: null, startedAt: new Date().toISOString()})
     },
+    destroy(timeEntryId) { this.deleteTimeEntry(timeEntryId) },
     initTimeEntrySwipe() {
       const swipeArea = this.$refs.timeEntryContent;
       this.swipeManager = new Hammer.Manager(this.$el);

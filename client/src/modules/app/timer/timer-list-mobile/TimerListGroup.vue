@@ -1,6 +1,6 @@
 <template>
-  <v-list two-line subheader>
-    <v-subheader>{{ timeEntriesDate }}</v-subheader>
+  <v-list two-line subheader class="pb-0">
+    <v-subheader class="black--text font-weight-bold subheading pt-5 pb-3 ">{{ timeEntriesDate }}</v-subheader>
     <template v-for="(timeEntry, index) in timeEntries" class="time-entry">
       <TimerListItem :timeEntry="timeEntry" :key="timeEntry.id"></TimerListItem>
       <v-divider
