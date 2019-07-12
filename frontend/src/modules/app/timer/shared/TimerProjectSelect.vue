@@ -23,7 +23,7 @@
     name: 'TimerProjectSelect',
     props: {
       initialProject: {
-        type: Number
+        type: String
       }
     },
     data: function() {
