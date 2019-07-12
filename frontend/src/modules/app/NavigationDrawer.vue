@@ -24,7 +24,9 @@
       </v-navigation-drawer>
       <v-toolbar app fixed color="white" clipped-left :height="64">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title class="font-weight-black headline primary--text" >TWORK</v-toolbar-title>
+        <v-toolbar-title class="font-weight-black headline primary--text" >TWORK
+          <span class="header__tagline font-weight-regular"> by Rademade</span>
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn flat href icon>
@@ -68,3 +70,9 @@
    }
   }
 </script>
+
+<style>
+  .header__tagline {
+    font-size: 0.7rem;
+  }
+</style>
