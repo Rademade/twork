@@ -10,19 +10,22 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-actions>
+      <BillableButton :initialBillableState="timeEntry.billable" v-on:billableChanged="onBillableStateChanged"/>
       <TrackingBarTimer class="pa-2"/>
       <v-spacer></v-spacer>
-      <v-btn flat color="error" class="red--text darken-4" @click="stopTimeEntry">stop</v-btn>
+      <v-icon color="red darken-4" class="active-timer__stop-ico pr-2" @click="stopTimeEntry">fas fa-stop-circle</v-icon>
     </v-card-actions>
   </v-card>
 </template>
 <script>
   import {mapGetters, mapActions } from "vuex";
+  import BillableButton from "../shared/BillableButton";
   // TODO: Move TrackingBarTimer to shared folder
   import TrackingBarTimer from "../tracking-bar/TrackingBarTimer";
   export default {
     components: {
-      TrackingBarTimer
+      TrackingBarTimer,
+      BillableButton
     },
     computed: {
       ...mapGetters({
@@ -39,3 +42,10 @@
     }
   }
 </script>
+
+<style>
+  .active-timer__stop-ico {
+    font-size: 35px;
+  }
+
+</style>

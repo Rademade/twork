@@ -1,15 +1,11 @@
 <template>
   <div>
-    <v-hover>
-      <v-list-tile
-        slot-scope="{ hover }"
+    <v-list-tile
         route
         :key="timeEntry.description"
         avatar
         ripple
-        :class="`${hover?  'grey lighten-3' : 'light'}`"
         @click="$router.push({name: 'timer-item', params: { id: timeEntry.id }})"
-
       >
         <v-list-tile-action v-if="timeEntry.unsynced">
           <v-icon color="red">warning</v-icon>
@@ -22,15 +18,18 @@
           </v-list-tile-title>
           <v-list-tile-sub-title class="grey--text darken-1">{{ timeEntry.projectName }}</v-list-tile-sub-title>
         </v-list-tile-content>
-        <v-list-tile-text class="font-weight-bold">{{ timeEntry.getDurationText() }} </v-list-tile-text>
+        <v-list-tile-text class="font-weight-bold px=1">{{ timeEntry.getDurationText() }} </v-list-tile-text>
         <v-list-tile-action>
-          <v-btn color="primary" outline fab small dark @click="restartTimeEntry">
-            <v-icon> autorenew </v-icon>
+          <v-btn  flat icon color="primary" @click="restartTimeEntry">
+            <v-icon color="grey lighten-1"> autorenew </v-icon>
           </v-btn>
+          <v-btn  flat icon color="primary" @click="destroy(timeEntry.id)">
+            <v-icon color="grey lighten-1"> delete </v-icon>
+          </v-btn>
+
+
         </v-list-tile-action>
       </v-list-tile>
-    </v-hover>
-
   </div>
 </template>
 
@@ -56,6 +55,7 @@ export default {
     restartTimeEntry() {
       this.createTimeEntry({...this.timeEntry, id: null, stoppedAt: null, startedAt: new Date().toISOString()})
     },
+    destroy(timeEntryId) { this.deleteTimeEntry(timeEntryId) },
     initTimeEntrySwipe() {
       const swipeArea = this.$refs.timeEntryContent;
       this.swipeManager = new Hammer.Manager(this.$el);
