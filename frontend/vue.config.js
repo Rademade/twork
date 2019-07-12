@@ -3,7 +3,7 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "http://app:3000",
         "changeOrigin": false,
         "secure": false,
         "logLevel": "debug"
@@ -28,7 +28,7 @@ module.exports = {
     ]
   },
   pwa: {
-    name: 'My App',
+    name: 'Twork',
     themeColor: '#4DBA87',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',

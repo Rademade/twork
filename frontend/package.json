@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "engines": {
-    "node": "9.5.0"
+    "node": "10.16.0"
   },
   "dependencies": {
     "@types/sequelize": "^4.27.29",
