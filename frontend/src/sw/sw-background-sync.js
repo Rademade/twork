@@ -289,14 +289,34 @@ const handleTimeEntrySyncEvent = function () {
   })
 }
 
+const sendSyncedMessageToAllClients = (count) => {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+        return new Promise(function(resolve, reject) {
+          var msg_chan = new MessageChannel();
+
+          msg_chan.port1.onmessage = function(event){
+              if(event.data.error){
+                  reject(event.data.error);
+              }else{
+                  resolve(event.data);
+              }
+          };
+
+          client.postMessage('Synced items ' + count, [msg_chan.port2]);
+        });
+      }
+    )
+  })
+}
+
 if ('SyncManager' in self) {
   self.addEventListener('sync', function (event) {
     if (event.tag == syncTimeEntiriesStore.getName()) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
           return handleTimeEntrySyncEvent().then((itemsCount) => {
-            debugger;
-            self.postMessage('synced:' + itemsCount, 'http://localhost:8080')
+            sendSyncedMessageToAllClients(itemsCount)
           });
         })
       )
