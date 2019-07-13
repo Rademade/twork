@@ -265,7 +265,7 @@ const timeEntryApi = new ApiServiceWithCache(TIME_ENTRY_API_PATH, timeEntriesSto
 const syncTimeEntiriesStore = new TworkIndexedDBStore(SYNC_TIME_ENTRIES_STORE);
 
 const handleTimeEntrySyncEvent = function () {
-  syncTimeEntiriesStore.readAllData().then((data) => {
+  return syncTimeEntiriesStore.readAllData().then((data) => {
     const itemsCount = data.length;
     data.forEach((timeEntry) =>  {
       let promise = null;
