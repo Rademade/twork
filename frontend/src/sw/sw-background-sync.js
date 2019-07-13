@@ -266,6 +266,7 @@ const syncTimeEntiriesStore = new TworkIndexedDBStore(SYNC_TIME_ENTRIES_STORE);
 
 const handleTimeEntrySyncEvent = function () {
   syncTimeEntiriesStore.readAllData().then((data) => {
+    const itemsCount = data.size;
     data.forEach((timeEntry) =>  {
       let promise = null;
       switch (timeEntry.operationType) {
@@ -282,8 +283,9 @@ const handleTimeEntrySyncEvent = function () {
           break;
         }
       }
-      return promise.then(() => syncTimeEntiriesStore.delete(timeEntry.id));
+      return promise.then(() => syncTimeEntiriesStore.delete(timeEntry.id))
     })
+    return itemsCount;
   })
 }
 
@@ -292,7 +294,9 @@ if ('SyncManager' in self) {
     if (event.tag == syncTimeEntiriesStore.getName()) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
-          return handleTimeEntrySyncEvent();
+          return handleTimeEntrySyncEvent().then((itemsCount) => {
+            self.postMessage('synced:' + itemsCount, 'http://localhost:8080')
+          });
         })
       )
     }

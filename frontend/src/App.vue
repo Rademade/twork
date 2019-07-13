@@ -8,15 +8,7 @@
 import TworkIndexedDBStore, { TIME_ENTRIES_STORE_NAME, SYNC_TIME_ENTRIES_STORE_NAME } from "@/core/services/TworkIndexedDBStore";
 
 export default  {
-  created() {
-    const timeEntriesSyncStore = new TworkIndexedDBStore('sync-time-entries');
-    window.addEventListener('online', () => {
-       const data = timeEntriesSyncStore.readAllData();
-    })
-    window.addEventListener('offline', () => {
-      const data = timeEntriesSyncStore.readAllData();
-    })
-  }
+
 }
 </script>
 
