@@ -266,7 +266,7 @@ const syncTimeEntiriesStore = new TworkIndexedDBStore(SYNC_TIME_ENTRIES_STORE);
 
 const handleTimeEntrySyncEvent = function () {
   syncTimeEntiriesStore.readAllData().then((data) => {
-    const itemsCount = data.size;
+    const itemsCount = data.length;
     data.forEach((timeEntry) =>  {
       let promise = null;
       switch (timeEntry.operationType) {
