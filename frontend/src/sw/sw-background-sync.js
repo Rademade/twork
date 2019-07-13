@@ -295,6 +295,7 @@ if ('SyncManager' in self) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
           return handleTimeEntrySyncEvent().then((itemsCount) => {
+            debugger;
             self.postMessage('synced:' + itemsCount, 'http://localhost:8080')
           });
         })
