@@ -315,9 +315,10 @@ if ('SyncManager' in self) {
     if (event.tag == syncTimeEntiriesStore.getName()) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
-          return handleTimeEntrySyncEvent().then((itemsCount) => {
-            sendSyncedMessageToAllClients(itemsCount)
-          });
+          handleTimeEntrySyncEvent();
+          // return handleTimeEntrySyncEvent().then((itemsCount) => {
+          //   sendSyncedMessageToAllClients(itemsCount)
+          // });
         })
       )
     }
