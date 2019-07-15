@@ -76,9 +76,9 @@
         this.snackbarText = 'You are online'
       })
 
-      window.addEventListener('message', (event) => {
-        alert('Message from sw ' +  JSON.stringify(event));
-      }, false)
+      // window.addEventListener('message', (event) => {
+      //   alert('Message from sw ' +  JSON.stringify(event));
+      // }, false)
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
