@@ -104,8 +104,9 @@
         <v-btn color="primary" @click="submit">submit</v-btn>
         <v-btn router-link :to="{ name: 'timer-list' }">back</v-btn>
       </form>
-      <v-progress-circular v-else indeterminate color="blue darken-4"></v-progress-circular>
+      <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
       <v-snackbar
+        color="white primary--text"
         v-model="snackbar"
         :bottom="true"
         :timeout="3000"

@@ -1,6 +1,6 @@
 {
-  "name": "twork-pwa",
-  "short_name": "twork-pwa",
+  "name": "TWORK",
+  "short_name": "TWORK",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "/app/timer",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
 }
