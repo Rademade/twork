@@ -265,7 +265,8 @@ const timeEntryApi = new ApiServiceWithCache(TIME_ENTRY_API_PATH, timeEntriesSto
 const syncTimeEntiriesStore = new TworkIndexedDBStore(SYNC_TIME_ENTRIES_STORE);
 
 const handleTimeEntrySyncEvent = function () {
-  syncTimeEntiriesStore.readAllData().then((data) => {
+  return syncTimeEntiriesStore.readAllData().then((data) => {
+    const itemsCount = data.length;
     data.forEach((timeEntry) =>  {
       let promise = null;
       switch (timeEntry.operationType) {
@@ -282,8 +283,30 @@ const handleTimeEntrySyncEvent = function () {
           break;
         }
       }
-      return promise.then(() => syncTimeEntiriesStore.delete(timeEntry.id));
+      return promise.then(() => syncTimeEntiriesStore.delete(timeEntry.id))
     })
+    return itemsCount;
+  })
+}
+
+const sendSyncedMessageToAllClients = (count) => {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+        return new Promise(function(resolve, reject) {
+          var msg_chan = new MessageChannel();
+
+          msg_chan.port1.onmessage = function(event){
+              if(event.data.error){
+                  reject(event.data.error);
+              }else{
+                  resolve(event.data);
+              }
+          };
+
+          client.postMessage('Synced items ' + count, [msg_chan.port2]);
+        });
+      }
+    )
   })
 }
 
@@ -292,7 +315,10 @@ if ('SyncManager' in self) {
     if (event.tag == syncTimeEntiriesStore.getName()) {
       event.waitUntil(
         TworkIndexedDBStore.initStores().then(function () {
-          return handleTimeEntrySyncEvent();
+          handleTimeEntrySyncEvent();
+          // return handleTimeEntrySyncEvent().then((itemsCount) => {
+          //   sendSyncedMessageToAllClients(itemsCount)
+          // });
         })
       )
     }

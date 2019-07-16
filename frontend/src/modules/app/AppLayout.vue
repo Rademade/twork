@@ -5,8 +5,20 @@
       <v-container fluid>
         <router-view></router-view>
       </v-container>
-
-
+      <v-snackbar
+        v-model="snackbar"
+        :bottom="true"
+        :timeout="3000"
+      >
+        {{ snackbarText }}
+        <v-btn
+          color="red darken-4"
+          flat
+          @click="snackbar=false"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
     </v-content>
     <v-footer height="auto" app inset>
       <v-container fluid>
@@ -30,6 +42,10 @@
     components: {
       NavigationDrawer
     },
+    data: () => ({
+      snackbar: false,
+      snackbarText: ''
+    }),
     methods: {
       ...mapActions({
         fetchTimeEntries: 'timers/fetchTimeEntries',
@@ -49,6 +65,20 @@
     created() {
       if (addToHomeScreen.isPromptAllowed()) { addToHomeScreen.showPrompt() }
       this.requestNotificationPermitions();
+
+      window.addEventListener('offline', () => {
+        this.snackbar = true;
+        this.snackbarText = 'You are offline'
+      })
+
+      window.addEventListener('online', () => {
+        this.snackbar = true;
+        this.snackbarText = 'You are online'
+      })
+
+      // window.addEventListener('message', (event) => {
+      //   alert('Message from sw ' +  JSON.stringify(event));
+      // }, false)
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {

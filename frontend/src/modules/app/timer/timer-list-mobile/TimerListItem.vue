@@ -5,25 +5,24 @@
         :key="timeEntry.description"
         avatar
         ripple
-        @click="$router.push({name: 'timer-item', params: { id: timeEntry.id }})"
       >
         <v-list-tile-action v-if="timeEntry.unsynced">
           <v-icon color="red">warning</v-icon>
         </v-list-tile-action>
-        <v-list-tile-content ref="timeEntryContent">
+        <v-list-tile-content ref="timeEntryContent" @click="$router.push({name: 'timer-item', params: { id: timeEntry.id }})">
           <v-list-tile-title >
             <router-link :to="{ name: 'timer-item', params: { id: timeEntry.id }}" class="grey--text text--darken-4">
               {{ timeEntry.description }}
             </router-link>
           </v-list-tile-title>
-          <v-list-tile-sub-title class="grey--text darken-1">{{ timeEntry.projectName }}</v-list-tile-sub-title>
+          <div class="grey--text darken-1">{{ timeEntry.projectName }}</div>
         </v-list-tile-content>
-        <v-list-tile-text class="font-weight-bold px=1">{{ timeEntry.getDurationText() }} </v-list-tile-text>
+        <div class="font-weight-bold px=1">{{ timeEntry.getDurationText() }} </div>
         <v-list-tile-action>
-          <v-btn  flat icon color="primary" @click="restartTimeEntry">
+          <v-btn  flat icon color="primary" @click.prevent="restartTimeEntry">
             <v-icon color="grey lighten-1"> autorenew </v-icon>
           </v-btn>
-          <v-btn  flat icon color="primary" @click="destroy(timeEntry.id)">
+          <v-btn  flat icon color="primary" @click.prevent="destroy(timeEntry.id)">
             <v-icon color="grey lighten-1"> delete </v-icon>
           </v-btn>
 
