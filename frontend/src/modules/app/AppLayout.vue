@@ -21,7 +21,7 @@
       </v-snackbar>
     </v-content>
     <v-footer height="auto" app inset>
-      <v-container>
+      <v-container fluid>
         <v-layout>
           <v-flex xs12 class="grey--text"><span> Made by <a class="grey--text underline">Rademade </a> &copy; 2019</span></v-flex>
         </v-layout>
