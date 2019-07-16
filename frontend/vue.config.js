@@ -29,10 +29,10 @@ module.exports = {
   },
   pwa: {
     name: 'Twork',
-    themeColor: '#4DBA87',
-    msTileColor: '#000000',
+    themeColor: '#ffffff',
+    msTileColor: '#ffffff',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+    appleMobileWebAppStatusBarStyle: 'white',
     debug: false,
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
