@@ -73,7 +73,7 @@
 
       window.addEventListener('online', () => {
         this.snackbar = true;
-        this.snackbarText = 'You are online'
+        this.snackbarText = 'You are online!'
       })
 
       // window.addEventListener('message', (event) => {
