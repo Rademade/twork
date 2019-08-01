@@ -3,7 +3,7 @@
     <v-btn  v-if="billableState" flat icon color="teal" v-on:click="unbill()">
       <v-icon>fas fa-dollar-sign</v-icon>
     </v-btn>
-    <v-btn v-if="!billableState" flat icon color="grey" v-on:click="bill()">
+    <v-btn v-if="!billableState" flat icon color="primary lighten-4" v-on:click="bill()">
       <v-icon>fas fa-dollar-sign</v-icon>
     </v-btn>
   </div>

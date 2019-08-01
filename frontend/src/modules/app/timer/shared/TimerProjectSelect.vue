@@ -9,6 +9,7 @@
           item-value="id"
           :menu-props="'auto'"
           :clearable="true"
+          label="Project"
           placeholder="No project"
           @input="emmitProjectChanged">
         </v-autocomplete>
