@@ -1,7 +1,7 @@
 <template>
-  <v-layout row wrap pa-2>
-    <v-flex xs1>
-      <v-btn flat icon color="red darken-4" v-if="timeEntry.unsynced">
+  <v-layout row py-2>
+    <v-flex xs1 v-if="timeEntry.unsynced">
+      <v-btn flat icon color="red darken-4" >
         <v-icon>cached</v-icon>
       </v-btn>
     </v-flex>

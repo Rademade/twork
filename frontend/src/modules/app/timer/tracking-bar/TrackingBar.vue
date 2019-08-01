@@ -1,22 +1,22 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row elevation-4 mb-4>
     <v-flex lg12>
       <v-card class="timer">
-        <v-layout row wrap>
+        <v-layout row px-4 py-2>
           <v-flex lg7 md6 xs12 pa-2>
             <v-text-field
               :value="activeTimeEntry.description"
-              placeholder="Your task description goes here"
+              label="Task Description"
               ref="descriptionInput"
               @blur="changeDescription"
               @keyup.enter.prevent="onDescriptionSubmit()"
             >
             </v-text-field>
           </v-flex>
-          <v-flex lg2 md6 xs12 pa-2>
+          <v-flex lg3 md6 xs12 pa-2>
             <TimerProjectSelect :initialProject="activeTimeEntry.projectId" @projectChanged="onProjectChanged" />
           </v-flex>
-          <v-flex lg-3 pa-2>
+          <v-flex lg-2 pa-2 justify-self-end>
             <v-layout>
               <v-flex lg2 pt-2>
                 <BillableButton
@@ -24,22 +24,20 @@
                   v-on:billableChanged="onBillableStateChanged"
                 />
               </v-flex>
-              <v-flex lg4 pt-4>
+              <v-flex lg5 pt-4 >
                 <DateTimeRangePicker v-on:rangeChanged="onTimeRangeChanged" :startedAt="activeTimeEntry.startedAt" rangeValidationStrategy="allowEmptyEnd">
                   <TrackingBarTimer slot="activator"/>
                 </DateTimeRangePicker>
               </v-flex>
-              <v-flex lg3>
-                <div>
-                  <v-btn v-if="!isTimerStarted" fab dark color="blue darken-4" v-on:click="onStartButtonClick">
-                    <v-icon dark>play_arrow</v-icon>
-                  </v-btn>
-                  <v-btn v-if="isTimerStarted" fab dark color="red darken-4" v-on:click="onStopButtonClick">
-                    <v-icon dark>stop</v-icon>
-                  </v-btn>
-                </div>
+              <v-flex lg2 align-center class="d-flex">
+                <v-btn v-if="!isTimerStarted" fab dark color="primary darken-4" v-on:click="onStartButtonClick">
+                  <v-icon dark>play_arrow</v-icon>
+                </v-btn>
+                <v-btn v-if="isTimerStarted" fab dark color="red darken-4" small d-flex class="tracking-bar__stop-ico" v-on:click="onStopButtonClick">
+                  <v-icon dark>stop</v-icon>
+                </v-btn>
               </v-flex>
-              <v-flex lg1 pt-2 pl-3>
+              <v-flex lg1 pt-2 pl-3 align-center>
                 <v-btn flat icon color="grey" v-on:click="deleteActiveTimer"><v-icon>delete</v-icon></v-btn>
               </v-flex>
             </v-layout>
@@ -137,4 +135,10 @@
     }
   }
 </script>
+
+<style>
+  .tracking-bar__stop-ico {
+    font-size: 35px;
+  }
+</style>
 
